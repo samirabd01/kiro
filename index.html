@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huntbl - Create your CV</title>
+    <style>
+        :root {
+            --primary-color: #7c3aed;
+            --primary-hover: #6d28d9;
+            --secondary-blue: #0ea5e9;
+            --bg-color: #f8fafc;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); display: flex; flex-direction: column; height: 100vh; overflow-x: hidden; }
+
+        /* --- GLOBAL HEADER --- */
+        header { background: white; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.02); z-index: 10; }
+        .logo-img { height: 35px; cursor: pointer; display: block; object-fit: contain; }
+        
+        .home-actions { display: flex; align-items: center; gap: 20px; }
+        .btn-login { padding: 8px 20px; border: 1px solid var(--border-color); background: white; border-radius: 8px; cursor: pointer; font-weight: 500; transition: 0.2s; }
+        .btn-login:hover { border-color: #94a3b8; }
+        
+        .lang-wrapper { display: flex; align-items: center; gap: 5px; color: #475569; }
+        .lang-selector { border: none; outline: none; font-size: 14px; color: #475569; background: transparent; cursor: pointer; font-weight: 500; }
+        
+        .stepper { display: none; gap: 20px; font-size: 14px; color: var(--text-muted); }
+        .stepper span { cursor: pointer; transition: 0.3s; padding: 5px 10px; border-radius: 5px; display: flex; align-items: center; gap: 8px;}
+        .step-num { background: #f1f5f9; color: #64748b; width: 24px; height: 24px; display: inline-flex; justify-content: center; align-items: center; border-radius: 50%; font-size: 12px; font-weight: bold;}
+        .stepper span.active { color: var(--primary-color); font-weight: 600; }
+        .stepper span.active .step-num { background: var(--primary-color); color: white; }
+
+        /* --- VIEWS --- */
+        .view-section { display: none !important; flex: 1; flex-direction: column; animation: fadeIn 0.4s ease; }
+        .view-section.active { display: flex !important; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- HOMEPAGE VIEW --- */
+        #view-home { align-items: center; justify-content: center; padding: 40px 20px; }
+        #view-home h2 { font-size: 32px; margin-bottom: 40px; color: #0f172a; }
+        .cards-container { display: flex; gap: 30px; max-width: 900px; width: 100%; justify-content: center; flex-wrap: wrap; }
+        .action-card { background: white; border-radius: 24px; padding: 50px 40px; width: 380px; display: flex; flex-direction: column; align-items: center; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: transform 0.3s ease; }
+        .action-card:hover { transform: translateY(-5px); }
+        .card-icon { height: 130px; margin-bottom: 25px; object-fit: contain; }
+        .action-card h3 { font-size: 20px; margin-bottom: 12px; color: #1e293b; }
+        .action-card p { font-size: 14px; color: #64748b; margin-bottom: 30px; line-height: 1.5; height: 40px; }
+        .btn-card { width: 100%; padding: 14px; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; transition: 0.2s; border: none; }
+        .btn-card.primary { background: var(--primary-color); color: white; }
+        .btn-card.outline { background: white; border: 1px solid var(--secondary-blue); color: var(--secondary-blue); }
+
+        /* --- TEMPLATE SELECTION VIEW --- */
+        #view-templates { padding: 60px 40px; background-color: var(--bg-color); overflow-y: auto; align-items: center;}
+        #view-templates h2 { font-size: 36px; font-weight: bold; margin-bottom: 50px; color: #1e293b; text-align: center; }
+        .templates-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 40px; max-width: 1200px; width: 100%; padding-bottom: 50px;}
+        .template-card { text-align: center; display: flex; flex-direction: column; align-items: center;}
+        .template-img-wrapper { position: relative; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.08); margin-bottom: 20px; border: 2px solid transparent; transition: 0.3s; overflow: hidden; cursor: pointer; width: 100%; aspect-ratio: 1 / 1.414; }
+        .template-img-wrapper img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        
+        .template-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(124, 58, 237, 0.1); display: flex; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; }
+        .btn-select { background: white; color: var(--primary-color); border: none; padding: 12px 24px; font-size: 14px; font-weight: bold; border-radius: 8px; transform: translateY(20px); transition: transform 0.3s ease; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .btn-select:hover { background: #f3f0ff; }
+        
+        .template-card:hover .template-img-wrapper { border-color: var(--primary-color); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(124, 58, 237, 0.2); }
+        .template-card:hover .template-overlay { opacity: 1; }
+        .template-card:hover .btn-select { transform: translateY(0); }
+        .template-name { font-size: 18px; color: #1e293b; font-weight: 600; }
+
+
+        /* --- BUILDER VIEW --- */
+        #view-builder main { display: flex; flex: 1; padding: 30px; gap: 30px; height: calc(100vh - 70px); }
+        .form-section { flex: 1; background: white; border-radius: 20px; padding: 40px; overflow-y: auto; box-shadow: 0 5px 15px rgba(0,0,0,0.02); display: flex; flex-direction: column; position: relative;}
+        
+        .step-container { display: none !important; flex: 1; flex-direction: column;}
+        .step-container.active { display: flex !important; animation: fadeIn 0.4s ease; }
+        
+        /* Form Elements */
+        .personal-info-layout { display: flex; gap: 40px; margin-bottom: 30px;}
+        .form-fields-left { flex: 2; display: flex; flex-direction: column; gap: 20px; }
+        .photo-upload-right { flex: 1; display: flex; flex-direction: column; gap: 8px; align-items: flex-start;} 
+        
+        .input-group { display: flex; gap: 20px; margin-bottom: 20px; }
+        .input-field { flex: 1; display: flex; flex-direction: column; gap: 8px; }
+        .input-field label { font-size: 14px; color: #334155; font-weight: 500;}
+        .input-field input { padding: 14px 16px; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-size: 14px; transition: 0.3s; color: #333;}
+        .input-field input:focus { border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.1); }
+        .input-field input::placeholder { color: #cbd5e1; }
+
+        /* --- PHOTO DROPZONE --- */
+        .photo-dropzone { 
+            position: relative; 
+            border: 2px dashed var(--border-color); 
+            border-radius: 12px; 
+            width: 100%; 
+            max-width: 160px; 
+            aspect-ratio: 1 / 1; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            color: #64748b; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            text-align: center; 
+            padding: 15px; 
+            background: white; 
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .photo-dropzone.dragover { border-color: var(--primary-color); background-color: #f3f0ff; }
+        .photo-dropzone:hover { border-color: var(--primary-color); }
+
+        
+        #dropzone-empty { display: flex; flex-direction: column; align-items: center; pointer-events: none;}
+        #dropzone-empty img { width: 48px; height: 48px; margin-bottom: 12px; object-fit: contain; }
+        #dropzone-empty span { font-size: 12px; line-height: 1.4; }
+
+        #dropzone-filled { display: none; width: 100%; height: 100%; position: absolute; top: 0; left: 0; background: #f8fafc; }
+        #dropzone-filled img#dropzone-image { width: 100%; height: 100%; object-fit: cover; }
+        
+        .dropzone-overlay { 
+            position: absolute; 
+            top: 0; left: 0; 
+            width: 100%; height: 100%; 
+            background: rgba(15, 23, 42, 0.65); 
+            display: flex; 
+            flex-direction: column;
+            justify-content: center; 
+            align-items: center; 
+            gap: 12px;
+            opacity: 0; 
+            transition: 0.3s; 
+        }
+        #dropzone-filled:hover .dropzone-overlay { opacity: 1; }
+        
+        .dropzone-action-btn { 
+            width: 90px; 
+            height: 32px; 
+            border-radius: 6px; 
+            border: none; 
+            cursor: pointer; 
+            background: transparent; 
+            padding: 0; 
+            transition: transform 0.2s; 
+        }
+        .dropzone-action-btn:hover { transform: scale(1.05); }
+        .dropzone-action-btn img { width: 100%; height: 100%; object-fit: contain; border-radius: 6px; }
+
+        /* --- CROP MODAL --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(3px);}
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s ease; }
+        .crop-modal { background: white; width: 100%; max-width: 500px; border-radius: 16px; overflow: hidden; box-shadow: 0 20px 50px rgba(0,0,0,0.15); display: flex; flex-direction: column;}
+        .modal-header { padding: 20px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; }
+        .modal-header h3 { font-size: 20px; color: #1e293b; }
+        .modal-close { background: transparent; border: none; font-size: 24px; color: #94a3b8; cursor: pointer; transition: 0.2s; }
+        .modal-close:hover { color: #ef4444; }
+
+        
+        .modal-body { padding: 24px; display: flex; justify-content: center; align-items: center; background: #e2e8f0; min-height: 350px;}
+        
+        .crop-area-container { position: relative; max-width: 100%; max-height: 300px; display: inline-block; overflow: hidden; user-select: none;}
+        .crop-area-container img { display: block; max-width: 100%; max-height: 300px; object-fit: contain; pointer-events: none;}
+        
+        .crop-box { position: absolute; border: 2px solid white; cursor: move; box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.55); display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr 1fr; z-index: 10; box-sizing: border-box; touch-action: none;}
+        .crop-box div { border: 1px dashed rgba(255,255,255,0.4); pointer-events: none; }
+        
+        .resize-handle { position: absolute; width: 12px; height: 12px; background: white; border: 1px solid #333; z-index: 11; cursor: pointer; border-radius: 50%;}
+        .resize-handle-nw { top: -6px; left: -6px; cursor: nwse-resize; }
+        .resize-handle-ne { top: -6px; right: -6px; cursor: nesw-resize; }
+        .resize-handle-sw { bottom: -6px; left: -6px; cursor: nesw-resize; }
+        .resize-handle-se { bottom: -6px; right: -6px; cursor: nwse-resize; }
+
+        .modal-footer { padding: 16px 24px; display: flex; justify-content: flex-end; gap: 15px; border-top: 1px solid #f1f5f9; }
+        .modal-footer button { padding: 10px 24px; border-radius: 8px; font-weight: 500; cursor: pointer; transition: 0.2s; border: none; font-size: 14px;}
+        .btn-modal-cancel { background: white; color: #64748b; border: 1px solid var(--border-color) !important; }
+        .btn-modal-crop { background: var(--primary-color); color: white; }
+        .btn-modal-crop:hover { background: var(--primary-hover); }
+
+        /* --- EXPERIENCE SECTION --- */
+        .jobs-list { display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px; max-height: 300px; overflow-y: auto; padding: 5px;}
+        .job-item { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px; display: flex; justify-content: space-between; align-items: center; transition: 0.3s; cursor: grab;}
+        .job-item:hover { border-color: var(--primary-color); box-shadow: 0 2px 8px rgba(124, 58, 237, 0.1); }
+        .job-info h4 { font-size: 16px; margin-bottom: 5px; color: #1e293b; display: flex; align-items: center; gap: 8px; }
+        .job-info h4 span { font-size: 20px; color: #cbd5e1; cursor: grab; }
+        .job-info p { font-size: 13px; color: #64748b; }
+        .job-actions { display: flex; gap: 10px; }
+        .job-actions button { background: transparent; border: none; cursor: pointer; font-size: 18px; transition: 0.2s; padding: 5px; }
+        .job-actions button:hover { transform: scale(1.2); }
+
+
+        .btn-add-job { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 14px; border: 2px dashed var(--border-color); background: white; border-radius: 10px; color: var(--primary-color); font-weight: 500; cursor: pointer; transition: 0.3s; font-size: 15px; margin-bottom: 20px;}
+        .btn-add-job:hover { border-color: var(--primary-color); background: #f3f0ff; }
+
+        /* Rich Text Editor */
+        .rich-editor { border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; display: flex; flex-direction: column; min-height: 200px; margin-bottom: 20px;}
+        .editor-toolbar { background: #f8fafc; border-bottom: 1px solid var(--border-color); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center;}
+        .toolbar-group { display: flex; gap: 15px; align-items: center;}
+        .toolbar-group button { background: transparent; border: none; font-size: 16px; color: #64748b; cursor: pointer; transition: 0.2s; font-weight: bold;}
+        .toolbar-group button:hover { color: var(--primary-color); }
+        .editor-content { padding: 20px; font-size: 14px; color: #333; flex: 1; outline: none; line-height: 1.6; overflow-y: auto;}
+        .editor-content ul { padding-left: 20px; margin-bottom: 10px; }
+        .editor-content li { margin-bottom: 15px; }
+
+        .action-buttons { display: flex; justify-content: space-between; margin-top: auto; padding-top: 20px; border-top: 1px solid #f1f5f9;}
+        .btn-back { padding: 12px 24px; background: white; border: 1px solid var(--border-color); border-radius: 8px; cursor: pointer; font-weight: 500; transition: 0.2s;}
+        .btn-next { padding: 12px 40px; background: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 15px; transition: 0.2s;}
+        .btn-next:hover { background: var(--primary-hover); }
+        
+        /* Preview Section */
+        .preview-section { flex: 1; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding-bottom: 20px;}
+        .cv-document { width: 100%; max-width: 600px; background: white; min-height: 800px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; overflow: hidden; transition: 0.4s ease; }
+        .cv-sidebar { width: 35%; padding: 40px 20px; transition: 0.4s ease; display: flex; flex-direction: column;}
+        .cv-main { width: 65%; padding: 40px 30px; transition: 0.4s ease; }
+        
+        #preview-photo-container { width: 100px; height: 100px; border-radius: 50%; margin: 0 auto 25px; overflow: hidden; display: none; border: 3px solid rgba(255,255,255,0.2); }
+        #preview-photo-img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* THEME STYLES */
+        .theme-free .cv-sidebar { background: #f8fafc; color: #333; border-right: 1px solid #eee; }
+        .theme-free .cv-main { color: #333; }
+
+        .theme-artistic .cv-sidebar { background: white; color: #333; }
+        .theme-artistic .cv-main { background: white; }
+        .theme-artistic { border-top: 20px solid #9d174d; }
+        .theme-bloom .cv-sidebar { background: #eff6ff; color: #1e3a8a; }
+        .theme-bloom .cv-main { color: #333; }
+        .theme-expert .cv-sidebar { background: #1d4ed8; color: white; }
+        .theme-expert .cv-main { color: #333; }
+        .theme-impact .cv-sidebar { background: white; color: #0d9488; border-right: 2px solid #0d9488;}
+        .theme-creative .cv-sidebar { background: #facc15; color: #333; }
+        .theme-creative .cv-main { color: #333; }
+        .theme-elite .cv-sidebar { background: #f3e8ff; color: #4c1d95; }
+        .theme-business .cv-sidebar { background: #0f172a; color: white; }
+        .theme-business .cv-main { background: #f8fafc; color: #0f172a; }
+        .theme-tech .cv-sidebar { background: #111827; color: #22d3ee; }
+        .theme-tech .cv-main { background: #1f2937; color: #e5e7eb; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <img src="Logo.png" alt="Huntbl Logo" class="logo-img" onclick="goToHome()">
+        <div class="home-actions" id="home-nav">
+            <button class="btn-login">Login</button>
+            <div class="lang-wrapper">
+                <span>🌐</span>
+                <select class="lang-selector">
+                    <option value="en" selected>EN</option>
+                    <option value="az">AZ</option>
+                    <option value="ru">RU</option>
+                </select>
+            </div>
+        </div>
+        <div class="stepper" id="builder-nav">
+            <span id="nav-1" class="active" onclick="goToStep(1)"><div class="step-num">1</div> Personal info</span>
+            <span id="nav-2" onclick="goToStep(2)"><div class="step-num">2</div> Experience</span>
+            <span id="nav-3" onclick="goToStep(3)"><div class="step-num">3</div> Education</span>
+            <span id="nav-4"><div class="step-num">4</div> Skills</span>
+        </div>
+    </header>
+
+
+    <div id="view-home" class="view-section active">
+        <h2>Get started in one of two ways:</h2>
+        <div class="cards-container">
+            <div class="action-card">
+                <img src="Frame 7.png" alt="Create a New CV" class="card-icon">
+                <h3>Create a New CV</h3>
+                <p>Build your document from scratch with AI assistance</p>
+                <button class="btn-card primary" onclick="goToTemplates()">Start Fresh</button>
+            </div>
+            <div class="action-card">
+                <img src="Frame 8.png" alt="Upload an Existing CV" class="card-icon">
+                <h3>Upload an Existing CV</h3>
+                <p>Reformat and update a previous resume in two clicks.</p>
+                <button class="btn-card outline">Upload File</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-templates" class="view-section">
+        <h2>Choose the right template for your needs</h2>
+        <div class="templates-grid">
+            <div class="template-card" onclick="chooseTemplate('theme-free')"><div class="template-img-wrapper"><img src="template-free.png" alt="Free"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Free</div></div>
+            <div class="template-card" onclick="chooseTemplate('theme-artistic')"><div class="template-img-wrapper"><img src="template-artistic.png" alt="Artistic"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Artistic</div></div>
+            <div class="template-card" onclick="chooseTemplate('theme-bloom')"><div class="template-img-wrapper"><img src="template-bloom.png" alt="Bloom"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Bloom</div></div>
+            <div class="template-card" onclick="chooseTemplate('theme-expert')"><div class="template-img-wrapper"><img src="template-expert.png" alt="Expert"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Expert</div></div>
+            <div class="template-card" onclick="chooseTemplate('theme-impact')"><div class="template-img-wrapper"><img src="template-impact.png" alt="Impact"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Impact</div></div>
+            <div class="template-card" onclick="chooseTemplate('theme-creative')"><div class="template-img-wrapper"><img src="template-creative.png" alt="Creative"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Creative</div></div>
+            <div class="template-card" onclick="chooseTemplate('theme-elite')"><div class="template-img-wrapper"><img src="template-elite.png" alt="Elite"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Elite</div></div>
+            <div class="template-card" onclick="chooseTemplate('theme-business')"><div class="template-img-wrapper"><img src="template-business.png" alt="Business"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Business</div></div>
+            <div class="template-card" onclick="chooseTemplate('theme-tech')"><div class="template-img-wrapper"><img src="template-tech.png" alt="Tech"><div class="template-overlay"><button class="btn-select">Select Template</button></div></div><div class="template-name">Tech</div></div>
+        </div>
+    </div>
+
+
+    <div class="modal-overlay" id="cropOverlay">
+        <div class="crop-modal">
+            <div class="modal-header">
+                <h3>Crop your photo</h3>
+                <button class="modal-close" onclick="cancelCrop()">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="crop-area-container" id="cropContainer">
+                    <img id="image-to-crop" src="" alt="To Crop">
+                    <div class="crop-box" id="cropBox">
+                        <div></div><div></div><div></div>
+                        <div></div><div></div><div></div>
+                        <div></div><div></div><div></div>
+                        
+                        <div class="resize-handle resize-handle-nw" data-handle="nw"></div>
+                        <div class="resize-handle resize-handle-ne" data-handle="ne"></div>
+                        <div class="resize-handle resize-handle-sw" data-handle="sw"></div>
+                        <div class="resize-handle resize-handle-se" data-handle="se"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-modal-cancel" onclick="cancelCrop()">Cancel</button>
+                <button class="btn-modal-crop" onclick="applyCrop()">Crop</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-builder" class="view-section">
+        <main>
+            <section class="form-section">
+                
+                <div id="step-1" class="step-container active">
+                    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 8px; color: #1e293b;">Personal Info</h1>
+                    <p style="color: #64748b; margin-bottom: 35px; font-size: 15px;">Include up-to-date information that employers can use to contact you.</p>
+                    
+                    <div class="personal-info-layout">
+                        <div class="form-fields-left">
+                            <div class="input-field"><label>Full Name</label><input type="text" id="fName" placeholder="e.g. Daniel Novak" oninput="updatePreview()"></div>
+                            <div class="input-field"><label>Email Address</label><input type="text" id="email" placeholder="e.g. danielnovak@gmail.com" oninput="updatePreview()"></div>
+                            <div class="input-field"><label>Phone Number</label><input type="text" id="phone" placeholder="e.g. +49 151 23456789" oninput="updatePreview()"></div>
+                            <div class="input-field"><label>Location</label><input type="text" id="location" placeholder="e.g. Berlin" oninput="updatePreview()"></div>
+                        </div>
+                        
+                        <div class="photo-upload-right">
+                            <label style="font-size: 14px; color: #334155; font-weight: 500; text-align: center; width: 100%; max-width: 160px; margin: 0 auto;">Photo</label>
+                            
+                            <input type="file" id="fileInput" accept="image/png, image/jpeg" style="display: none;" onchange="handleFileSelect(event)">
+                            
+                            <div class="photo-dropzone" id="dropzone" onclick="triggerFileInput(event)">
+                                <div id="dropzone-empty">
+                                    <img src="profile icon.png" alt="Profile Icon">
+                                    <span>Up to 5MB<br>(PNG or JPG)</span>
+                                </div>
+                                <div id="dropzone-filled" onclick="event.stopPropagation()">
+                                    <img id="dropzone-image" src="" alt="Uploaded">
+                                    <div class="dropzone-overlay">
+                                        <button class="dropzone-action-btn" onclick="triggerFileInput(event)" title="Replace Photo">
+                                            <img src="replace.png" alt="Replace">
+                                        </button>
+                                        <button class="dropzone-action-btn" onclick="removePhoto(event)" title="Remove Photo">
+                                            <img src="remove.png" alt="Remove">
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="goToTemplates()">&lt; Back</button>
+                        <button class="btn-next" onclick="goToStep(2)">Next &gt;</button>
+                    </div>
+                </div>
+
+                
+                <div id="step-2" class="step-container">
+                    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 8px; color: #1e293b;">Work Experience Overview</h1>
+                    <p style="color: #64748b; margin-bottom: 35px; font-size: 15px;">Review your employment history. Remember to add all your relevant experience.</p>
+                    
+                    <div id="jobs-list" class="jobs-list">
+                        <!-- Jobs will be added here dynamically -->
+                    </div>
+
+                    <button class="btn-add-job" onclick="toggleJobForm()">
+                        <span style="font-size: 20px;">⊕</span> Add Another Job
+                    </button>
+
+                    <div id="job-form" style="display: none;">
+                        <div class="input-group">
+                            <div class="input-field"><label>Job title</label><input type="text" id="jobTitle" placeholder="e.g. Marketing manager"></div>
+                            <div class="input-field"><label>Company Name</label><input type="text" id="companyName" placeholder="e.g. Codelink international"></div>
+                        </div>
+                        <div class="input-group" style="margin-bottom: 15px;">
+                            <div class="input-field"><label>Start Date</label><input type="text" id="startDate" placeholder="e.g. Jul 2025"></div>
+                            <div class="input-field"><label>End Date</label><input type="text" id="endDate" placeholder="e.g. Aug 2025"></div>
+                        </div>
+                        <div style="margin-bottom: 25px;">
+                            <label style="display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; color: #334155;">
+                                <input type="checkbox" id="currentJob" style="width: 18px; height: 18px; accent-color: var(--primary-color);"> I currently work here
+                            </label>
+                        </div>
+                        <div class="rich-editor">
+                            <div class="editor-toolbar">
+                                <div class="toolbar-group">
+                                    <button onclick="formatText('bold')" style="font-family: serif;">B</button>
+                                    <button onclick="formatText('italic')" style="font-style: italic; font-family: serif;">I</button>
+                                    <button onclick="formatText('underline')" style="text-decoration: underline; font-family: serif;">U</button>
+                                    <button onclick="formatText('insertUnorderedList')">≡</button>
+                                </div>
+                            </div>
+                            <div class="editor-content" contenteditable="true" id="jobDescription">
+                                <ul>
+                                    <li>Developed and maintained scalable web applications using modern frameworks such as React and Node.js.</li>
+                                    <li>Optimized application performance by analyzing and improving existing code.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="btn-next" onclick="saveJob()" style="width: 100%; margin-bottom: 15px;">Save Job</button>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="goToStep(1)">&lt; Back</button>
+                        <button class="btn-next" onclick="goToStep(3)">Next &gt;</button>
+                    </div>
+                </div>
+
+                <div id="step-3" class="step-container">
+                    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 8px;">Education</h1>
+                    <p style="color: #64748b; margin-bottom: 35px;">List relevant degrees, diplomas and certificates.</p>
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="goToStep(2)">&lt; Back</button>
+                        <button class="btn-next">Next &gt;</button>
+                    </div>
+                </div>
+
+            </section>
+
+            
+            <section class="preview-section">
+                <div class="cv-document theme-free" id="live-cv-preview">
+                    <div class="cv-sidebar">
+                        <div id="preview-photo-container">
+                            <img id="preview-photo-img" src="" alt="CV Photo">
+                        </div>
+
+                        <h4 style="margin-bottom: 15px; font-weight: bold; font-size: 15px;">Contact info</h4>
+                        <div style="font-size: 11px; margin-bottom: 8px;">📞 <span id="preview-phone">+49 151 23456789</span></div>
+                        <div style="font-size: 11px; margin-bottom: 8px;">✉️ <span id="preview-email">daniel.novak@gmail.com</span></div>
+                        <div style="font-size: 11px; margin-bottom: 8px;">📍 <span id="preview-location">Berlin, Germany</span></div>
+                    </div>
+                    <div class="cv-main">
+                        <h1 id="preview-name" style="font-size: 32px; margin-bottom: 5px; font-weight: 700;">Daniel Novak</h1>
+                        <h3 id="preview-title" style="font-size: 16px; margin-bottom: 35px; color: var(--secondary-blue); font-weight: 500;">Software Engineer</h3>
+                        
+                        <h4 style="border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 15px; font-size: 16px; font-weight: bold;">Experience</h4>
+                        <div id="preview-experience">
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <strong style="font-size: 13px;">Senior Software Engineer</strong>
+                                    <span style="font-size: 11px; opacity: 0.6;">Apr 2018 - May 2024</span>
+                                </div>
+                                <div style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">CloudWorks GmbH</div>
+                                <div style="font-size: 11px; opacity: 0.7; line-height: 1.6;">
+                                    • Developed cloud-native applications using AWS and Kubernetes.<br>
+                                    • Integrated RESTful APIs for third-party services.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        /* --- GLOBAL STATE --- */
+        let jobs = [];
+        let editingJobIndex = null;
+
+        /* --- VIEW NAVIGATION --- */
+        function hideAllViews() {
+            document.getElementById('view-home').classList.remove('active');
+            document.getElementById('view-templates').classList.remove('active');
+            document.getElementById('view-builder').classList.remove('active');
+        }
+
+        function goToTemplates() {
+            hideAllViews();
+            document.getElementById('view-templates').classList.add('active');
+            document.getElementById('home-nav').style.display = 'flex';
+            document.getElementById('builder-nav').style.display = 'none';
+        }
+
+        function chooseTemplate(themeClass) {
+            document.getElementById('live-cv-preview').className = 'cv-document ' + themeClass;
+            hideAllViews();
+            document.getElementById('view-builder').classList.add('active');
+            document.getElementById('home-nav').style.display = 'none';
+            document.getElementById('builder-nav').style.display = 'flex';
+            goToStep(1); 
+        }
+
+        function goToHome() {
+            hideAllViews();
+            document.getElementById('view-home').classList.add('active');
+            document.getElementById('home-nav').style.display = 'flex';
+            document.getElementById('builder-nav').style.display = 'none';
+        }
+
+        function goToStep(stepNumber) {
+            document.querySelectorAll('.step-container').forEach(step => step.classList.remove('active'));
+            document.querySelectorAll('.stepper span').forEach(nav => nav.classList.remove('active'));
+            const activeStep = document.getElementById('step-' + stepNumber);
+            if (activeStep) activeStep.classList.add('active');
+            const activeNav = document.getElementById('nav-' + stepNumber);
+            if (activeNav) activeNav.classList.add('active');
+        }
+
+        function updatePreview() {
+            let fName = document.getElementById('fName').value;
+            let email = document.getElementById('email').value;
+            let phone = document.getElementById('phone').value;
+            let location = document.getElementById('location').value;
+            
+            document.getElementById('preview-name').innerText = fName || "Daniel Novak";
+            document.getElementById('preview-email').innerText = email || "daniel.novak@gmail.com";
+            document.getElementById('preview-phone').innerText = phone || "+49 151 23456789";
+            document.getElementById('preview-location').innerText = location || "Berlin, Germany";
+        }
+
+
+        /* --- EXPERIENCE MANAGEMENT --- */
+        function toggleJobForm() {
+            const form = document.getElementById('job-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            if (form.style.display === 'block') {
+                clearJobForm();
+            }
+        }
+
+        function clearJobForm() {
+            document.getElementById('jobTitle').value = '';
+            document.getElementById('companyName').value = '';
+            document.getElementById('startDate').value = '';
+            document.getElementById('endDate').value = '';
+            document.getElementById('currentJob').checked = false;
+            document.getElementById('jobDescription').innerHTML = '<ul><li>Developed and maintained scalable web applications using modern frameworks such as React and Node.js.</li><li>Optimized application performance by analyzing and improving existing code.</li></ul>';
+            editingJobIndex = null;
+        }
+
+        function saveJob() {
+            const jobTitle = document.getElementById('jobTitle').value;
+            const companyName = document.getElementById('companyName').value;
+            const startDate = document.getElementById('startDate').value;
+            const endDate = document.getElementById('currentJob').checked ? 'Present' : document.getElementById('endDate').value;
+            const description = document.getElementById('jobDescription').innerHTML;
+
+            if (!jobTitle || !companyName) {
+                alert('Please fill in Job Title and Company Name');
+                return;
+            }
+
+            const job = { jobTitle, companyName, startDate, endDate, description };
+
+            if (editingJobIndex !== null) {
+                jobs[editingJobIndex] = job;
+                editingJobIndex = null;
+            } else {
+                jobs.push(job);
+            }
+
+            renderJobs();
+            updateExperiencePreview();
+            toggleJobForm();
+        }
+
+        function renderJobs() {
+            const jobsList = document.getElementById('jobs-list');
+            jobsList.innerHTML = '';
+
+            jobs.forEach((job, index) => {
+                const jobItem = document.createElement('div');
+                jobItem.className = 'job-item';
+                jobItem.innerHTML = `
+                    <div class="job-info">
+                        <h4><span>☰</span> ${job.jobTitle}</h4>
+                        <p>${job.companyName} | ${job.startDate} - ${job.endDate}</p>
+                    </div>
+                    <div class="job-actions">
+                        <button onclick="editJob(${index})" title="Edit">✏️</button>
+                        <button onclick="deleteJob(${index})" title="Delete">🗑️</button>
+                    </div>
+                `;
+                jobsList.appendChild(jobItem);
+            });
+        }
+
+        function editJob(index) {
+            const job = jobs[index];
+            document.getElementById('jobTitle').value = job.jobTitle;
+            document.getElementById('companyName').value = job.companyName;
+            document.getElementById('startDate').value = job.startDate;
+            document.getElementById('endDate').value = job.endDate === 'Present' ? '' : job.endDate;
+            document.getElementById('currentJob').checked = job.endDate === 'Present';
+            document.getElementById('jobDescription').innerHTML = job.description;
+            
+            editingJobIndex = index;
+            document.getElementById('job-form').style.display = 'block';
+        }
+
+        function deleteJob(index) {
+            if (confirm('Are you sure you want to delete this job?')) {
+                jobs.splice(index, 1);
+                renderJobs();
+                updateExperiencePreview();
+            }
+        }
+
+        function updateExperiencePreview() {
+            const previewExp = document.getElementById('preview-experience');
+            previewExp.innerHTML = '';
+
+            jobs.forEach(job => {
+                const expItem = document.createElement('div');
+                expItem.style.marginBottom = '20px';
+                expItem.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <strong style="font-size: 13px;">${job.jobTitle}</strong>
+                        <span style="font-size: 11px; opacity: 0.6;">${job.startDate} - ${job.endDate}</span>
+                    </div>
+                    <div style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">${job.companyName}</div>
+                    <div style="font-size: 11px; opacity: 0.7; line-height: 1.6;">
+                        ${job.description.replace(/<ul>/g, '').replace(/<\/ul>/g, '').replace(/<li>/g, '• ').replace(/<\/li>/g, '<br>')}
+                    </div>
+                `;
+                previewExp.appendChild(expItem);
+            });
+        }
+
+        function formatText(command) {
+            document.execCommand(command, false, null);
+            document.getElementById('jobDescription').focus();
+        }
+
+
+        /* --- PHOTO UPLOAD & CROP --- */
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const cropOverlay = document.getElementById('cropOverlay');
+        const imageToCrop = document.getElementById('image-to-crop');
+        const cropBox = document.getElementById('cropBox');
+        const cropContainer = document.getElementById('cropContainer');
+        
+        let originalImageObj = new Image();
+        let isDragging = false;
+        let isResizing = false;
+        let startX, startY;
+        let startLeft, startTop, startWidth;
+        let currentHandle = null;
+
+        function triggerFileInput(event) {
+            if (event) event.stopPropagation(); 
+            fileInput.click();
+        }
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) processFile(file);
+            fileInput.value = ""; 
+        }
+
+        dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('dragover'); });
+        dropzone.addEventListener('dragleave', () => { dropzone.classList.remove('dragover'); });
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('dragover');
+            if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                processFile(e.dataTransfer.files[0]);
+            }
+        });
+
+        function processFile(file) {
+            if (file.type.match('image.*')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    originalImageObj.onload = function() {
+                        imageToCrop.src = originalImageObj.src;
+                        cropOverlay.classList.add('active');
+                        setupCropBox();
+                    };
+                    originalImageObj.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert('Please upload a valid image file (PNG or JPG).');
+            }
+        }
+
+        function setupCropBox() {
+            setTimeout(() => {
+                const imgWidth = imageToCrop.clientWidth;
+                const imgHeight = imageToCrop.clientHeight;
+                const size = Math.min(imgWidth, imgHeight) * 0.8;
+                
+                cropBox.style.width = size + 'px';
+                cropBox.style.height = size + 'px';
+                cropBox.style.left = ((imgWidth - size) / 2) + 'px';
+                cropBox.style.top = ((imgHeight - size) / 2) + 'px';
+            }, 50);
+        }
+
+        function getPointerCoords(e) {
+            if (e.touches && e.touches.length > 0) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            return { x: e.clientX, y: e.clientY };
+        }
+
+        cropBox.addEventListener('mousedown', initAction);
+        cropBox.addEventListener('touchstart', initAction, {passive: false});
+
+        function initAction(e) {
+            if(e.target.classList.contains('resize-handle')) {
+                isResizing = true;
+                currentHandle = e.target.dataset.handle;
+            } else {
+                isDragging = true;
+            }
+            let coords = getPointerCoords(e);
+            startX = coords.x;
+            startY = coords.y;
+            startLeft = cropBox.offsetLeft;
+            startTop = cropBox.offsetTop;
+            startWidth = cropBox.offsetWidth;
+            e.stopPropagation();
+            if(e.type === 'mousedown') e.preventDefault();
+        }
+
+        document.addEventListener('mousemove', handleAction);
+        document.addEventListener('touchmove', handleAction, {passive: false});
+        document.addEventListener('mouseup', endAction);
+        document.addEventListener('touchend', endAction);
+
+        function handleAction(e) {
+            if (!isDragging && !isResizing) return;
+            let coords = getPointerCoords(e);
+            let dx = coords.x - startX;
+            let dy = coords.y - startY;
+
+            let containerWidth = cropContainer.clientWidth;
+            let containerHeight = cropContainer.clientHeight;
+
+            if (isDragging) {
+                let newLeft = startLeft + dx;
+                let newTop = startTop + dy;
+                newLeft = Math.max(0, Math.min(newLeft, containerWidth - startWidth));
+                newTop = Math.max(0, Math.min(newTop, containerHeight - startWidth));
+                cropBox.style.left = newLeft + 'px';
+                cropBox.style.top = newTop + 'px';
+            } else if (isResizing) {
+                let newSize = startWidth;
+                let newLeft = startLeft;
+                let newTop = startTop;
+
+                if (currentHandle === 'se') {
+                    newSize = startWidth + dx;
+                } else if (currentHandle === 'sw') {
+                    newSize = startWidth - dx;
+                    newLeft = startLeft + dx;
+                } else if (currentHandle === 'ne') {
+                    newSize = startWidth + dx;
+                    newTop = startTop - dx;
+                } else if (currentHandle === 'nw') {
+                    newSize = startWidth - dx;
+                    newLeft = startLeft + dx;
+                    newTop = startTop + dx;
+                }
+
+                if (newSize < 50) {
+                    let diff = 50 - newSize;
+                    newSize = 50;
+                    if (currentHandle === 'sw' || currentHandle === 'nw') newLeft -= diff;
+                    if (currentHandle === 'ne' || currentHandle === 'nw') newTop -= diff;
+                }
+
+                if (newLeft < 0) { let diff = -newLeft; newLeft = 0; newSize -= diff; if(currentHandle === 'nw') newTop += diff; }
+                if (newTop < 0) { let diff = -newTop; newTop = 0; newSize -= diff; if(currentHandle === 'nw') newLeft += diff; }
+                if (newLeft + newSize > containerWidth) { let diff = (newLeft + newSize) - containerWidth; newSize -= diff; if(currentHandle === 'ne') newTop += diff; }
+                if (newTop + newSize > containerHeight) { let diff = (newTop + newSize) - containerHeight; newSize -= diff; if(currentHandle === 'sw') newLeft += diff; }
+
+                cropBox.style.width = newSize + 'px';
+                cropBox.style.height = newSize + 'px';
+                cropBox.style.left = newLeft + 'px';
+                cropBox.style.top = newTop + 'px';
+            }
+            e.preventDefault();
+        }
+
+        function endAction() {
+            isDragging = false;
+            isResizing = false;
+            currentHandle = null;
+        }
+
+        function cancelCrop() {
+            cropOverlay.classList.remove('active');
+        }
+
+        function applyCrop() {
+            const scaleX = originalImageObj.naturalWidth / imageToCrop.clientWidth;
+            const scaleY = originalImageObj.naturalHeight / imageToCrop.clientHeight;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = cropBox.offsetWidth * scaleX;
+            canvas.height = cropBox.offsetHeight * scaleY;
+            const ctx = canvas.getContext('2d');
+
+            ctx.drawImage(
+                originalImageObj,
+                cropBox.offsetLeft * scaleX, cropBox.offsetTop * scaleY,
+                canvas.width, canvas.height,
+                0, 0, canvas.width, canvas.height
+            );
+
+            const croppedDataUrl = canvas.toDataURL('image/jpeg', 0.95);
+
+            document.getElementById('dropzone-empty').style.display = 'none';
+            document.getElementById('dropzone-filled').style.display = 'block';
+            document.getElementById('dropzone-image').src = croppedDataUrl;
+            
+            document.getElementById('preview-photo-container').style.display = 'block';
+            document.getElementById('preview-photo-img').src = croppedDataUrl;
+            
+            cancelCrop(); 
+        }
+
+        function removePhoto(event) {
+            if (event) event.stopPropagation();
+            document.getElementById('dropzone-filled').style.display = 'none';
+            document.getElementById('dropzone-empty').style.display = 'flex';
+            document.getElementById('preview-photo-container').style.display = 'none';
+            document.getElementById('preview-photo-img').src = '';
+            fileInput.value = '';
+        }
+    </script>
+</body>
+</html>
