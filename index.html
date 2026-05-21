@@ -291,6 +291,7 @@
             <span id="nav-2" onclick="goToStep(2)"><div class="step-num">2</div> Experience</span>
             <span id="nav-3" onclick="goToStep(3)"><div class="step-num">3</div> Education</span>
             <span id="nav-4" onclick="goToStep(4)"><div class="step-num">4</div> Skills</span>
+            <span id="nav-5" onclick="goToStep(5)"><div class="step-num">5</div> Summary</span>
         </div>
     </header>
 
@@ -503,7 +504,142 @@
 
                     <div class="action-buttons">
                         <button class="btn-back" onclick="goToStep(3)">&lt; Back</button>
-                        <button class="btn-next" onclick="downloadCV()">Download CV</button>
+                        <button class="btn-next" onclick="goToStep(5)">Next &gt;</button>
+                    </div>
+                </div>
+
+                <!-- STEP 5: SUMMARY (Anything else you'd like to include?) -->
+                <div id="step-5" class="step-container">
+                    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 8px; color: #1e293b;">Anything else you'd like to include?</h1>
+                    <p style="color: #64748b; margin-bottom: 35px; font-size: 15px;">Now, you can add other sections if you think they'll strengthen your document.</p>
+                    
+                    <!-- Certification Section -->
+                    <div class="optional-section" style="border: 2px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 20px; background: white; cursor: pointer; transition: 0.3s;" onclick="toggleSectionForm('certification')">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background: #f3f0ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary-color);">⊕</div>
+                            <div>
+                                <h3 style="font-size: 18px; margin-bottom: 5px; color: #1e293b;">Certification</h3>
+                                <p style="font-size: 13px; color: #64748b;">Add relevant certifications to boost your profile</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="certification-form" class="section-form" style="display: none; margin-bottom: 25px; padding: 25px; background: #f8fafc; border-radius: 12px;">
+                        <div id="certification-list" class="jobs-list" style="max-height: 200px;"></div>
+                        <button class="btn-add-job" onclick="event.stopPropagation(); showCertForm()">
+                            <span style="font-size: 20px;">⊕</span> Add Certification
+                        </button>
+                        <div id="cert-input-form" style="display: none;">
+                            <div class="input-field" style="margin-bottom: 15px;">
+                                <label>Certification Name</label>
+                                <input type="text" id="certName" placeholder="e.g. Scrum Master essentials - Coursera 2025">
+                            </div>
+                            <button class="btn-next" onclick="saveCertification()" style="width: 100%;">Save</button>
+                        </div>
+                    </div>
+
+                    <!-- Accomplishments Section -->
+                    <div class="optional-section" style="border: 2px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 20px; background: white; cursor: pointer; transition: 0.3s;" onclick="toggleSectionForm('accomplishments')">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background: #f3f0ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary-color);">⊕</div>
+                            <div>
+                                <h3 style="font-size: 18px; margin-bottom: 5px; color: #1e293b;">Accomplishments</h3>
+                                <p style="font-size: 13px; color: #64748b;">Highlight key achievements or awards</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="accomplishments-form" class="section-form" style="display: none; margin-bottom: 25px; padding: 25px; background: #f8fafc; border-radius: 12px;">
+                        <div id="accomplishments-list" class="jobs-list" style="max-height: 200px;"></div>
+                        <button class="btn-add-job" onclick="event.stopPropagation(); showAccomplishmentForm()">
+                            <span style="font-size: 20px;">⊕</span> Add Accomplishment
+                        </button>
+                        <div id="accomplishment-input-form" style="display: none;">
+                            <div class="input-field" style="margin-bottom: 15px;">
+                                <label>Accomplishment</label>
+                                <input type="text" id="accomplishmentName" placeholder="e.g. Published research paper on AI">
+                            </div>
+                            <button class="btn-next" onclick="saveAccomplishment()" style="width: 100%;">Save</button>
+                        </div>
+                    </div>
+
+                    <!-- Languages Section -->
+                    <div class="optional-section" style="border: 2px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 20px; background: white; cursor: pointer; transition: 0.3s;" onclick="toggleSectionForm('languages')">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background: #f3f0ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary-color);">⊕</div>
+                            <div>
+                                <h3 style="font-size: 18px; margin-bottom: 5px; color: #1e293b;">Languages</h3>
+                                <p style="font-size: 13px; color: #64748b;">List languages you speak and your proficiency level</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="languages-form" class="section-form" style="display: none; margin-bottom: 25px; padding: 25px; background: #f8fafc; border-radius: 12px;">
+                        <div id="languages-list" class="jobs-list" style="max-height: 200px;"></div>
+                        <button class="btn-add-job" onclick="event.stopPropagation(); showLanguageForm()">
+                            <span style="font-size: 20px;">⊕</span> Add Language
+                        </button>
+                        <div id="language-input-form" style="display: none;">
+                            <div class="input-group" style="margin-bottom: 15px;">
+                                <div class="input-field">
+                                    <label>Language</label>
+                                    <input type="text" id="languageName" placeholder="e.g. English">
+                                </div>
+                                <div class="input-field">
+                                    <label>Proficiency</label>
+                                    <select id="languageLevel" style="padding: 14px 16px; border: 1px solid var(--border-color); border-radius: 8px; outline: none; font-size: 14px; color: #333;">
+                                        <option value="Native">Native</option>
+                                        <option value="Fluent">Fluent</option>
+                                        <option value="Professional">Professional</option>
+                                        <option value="Intermediate">Intermediate</option>
+                                        <option value="Basic">Basic</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="btn-next" onclick="saveLanguage()" style="width: 100%;">Save</button>
+                        </div>
+                    </div>
+
+                    <!-- Hobbies and Interests Section -->
+                    <div class="optional-section" style="border: 2px solid #e2e8f0; border-radius: 12px; padding: 30px; margin-bottom: 20px; background: white; cursor: pointer; transition: 0.3s;" onclick="toggleSectionForm('hobbies')">
+                        <div style="display: flex; align-items: center; gap: 15px;">
+                            <div style="width: 40px; height: 40px; background: #f3f0ff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; color: var(--primary-color);">⊕</div>
+                            <div>
+                                <h3 style="font-size: 18px; margin-bottom: 5px; color: #1e293b;">Hobbies and Interests</h3>
+                                <p style="font-size: 13px; color: #64748b;">Share your personal interests and hobbies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="hobbies-form" class="section-form" style="display: none; margin-bottom: 25px; padding: 25px; background: #f8fafc; border-radius: 12px;">
+                        <div id="hobbies-list" class="jobs-list" style="max-height: 200px;"></div>
+                        <button class="btn-add-job" onclick="event.stopPropagation(); showHobbyForm()">
+                            <span style="font-size: 20px;">⊕</span> Add Hobby
+                        </button>
+                        <div id="hobby-input-form" style="display: none;">
+                            <div class="input-field" style="margin-bottom: 15px;">
+                                <label>Hobby / Interest</label>
+                                <input type="text" id="hobbyName" placeholder="e.g. Photography, Hiking">
+                            </div>
+                            <button class="btn-next" onclick="saveHobby()" style="width: 100%;">Save</button>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="goToStep(4)">&lt; Back</button>
+                        <button class="btn-next" onclick="goToStep(6)">Preview</button>
+                    </div>
+                </div>
+
+                <!-- STEP 6: FINAL PREVIEW -->
+                <div id="step-6" class="step-container">
+                    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 8px; color: #1e293b;">Preview</h1>
+                    <p style="color: #64748b; margin-bottom: 35px; font-size: 15px;">Your CV is ready! Review it below and download when you're satisfied.</p>
+                    
+                    <div style="text-align: center; padding: 40px;">
+                        <p style="font-size: 16px; color: #64748b; margin-bottom: 30px;">Check the preview on the right side →</p>
+                        <button class="btn-next" onclick="downloadCV()" style="width: auto; padding: 16px 50px; font-size: 16px;">⬇ Download CV</button>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="goToStep(5)">&lt; Back</button>
+                        <button class="btn-next" onclick="downloadCV()">Finish</button>
                     </div>
                 </div>
 
@@ -609,6 +745,13 @@
             if (activeStep) activeStep.classList.add('active');
             const activeNav = document.getElementById('nav-' + stepNumber);
             if (activeNav) activeNav.classList.add('active');
+
+            // Hide/show stepper for preview page
+            if (stepNumber === 6) {
+                document.getElementById('builder-nav').style.display = 'none';
+            } else if (document.getElementById('view-builder').classList.contains('active')) {
+                document.getElementById('builder-nav').style.display = 'flex';
+            }
         }
 
         function updatePreview() {
@@ -1104,6 +1247,179 @@
 
         function downloadCV() {
             alert('CV download feature will be implemented. This will generate a PDF of your CV.');
+        }
+
+        /* --- STEP 5: SUMMARY SECTIONS --- */
+        let certifications = [];
+        let accomplishments = [];
+        let languages = [];
+        let hobbies = [];
+
+        function toggleSectionForm(sectionName) {
+            const form = document.getElementById(sectionName + '-form');
+            if (form.style.display === 'none') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        }
+
+        // Certification Functions
+        function showCertForm() {
+            document.getElementById('cert-input-form').style.display = 'block';
+        }
+        function saveCertification() {
+            const certName = document.getElementById('certName').value.trim();
+            if (!certName) {
+                alert('Please enter a certification name');
+                return;
+            }
+            certifications.push(certName);
+            renderCertifications();
+            document.getElementById('certName').value = '';
+            document.getElementById('cert-input-form').style.display = 'none';
+        }
+        function renderCertifications() {
+            const list = document.getElementById('certification-list');
+            list.innerHTML = '';
+            certifications.forEach((cert, index) => {
+                const item = document.createElement('div');
+                item.className = 'job-item';
+                item.innerHTML = `
+                    <div class="job-info">
+                        <h4>${cert}</h4>
+                    </div>
+                    <div class="job-actions">
+                        <button onclick="deleteCertification(${index})" title="Delete">🗑️</button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+        function deleteCertification(index) {
+            if (confirm('Delete this certification?')) {
+                certifications.splice(index, 1);
+                renderCertifications();
+            }
+        }
+
+        // Accomplishments Functions
+        function showAccomplishmentForm() {
+            document.getElementById('accomplishment-input-form').style.display = 'block';
+        }
+        function saveAccomplishment() {
+            const accName = document.getElementById('accomplishmentName').value.trim();
+            if (!accName) {
+                alert('Please enter an accomplishment');
+                return;
+            }
+            accomplishments.push(accName);
+            renderAccomplishments();
+            document.getElementById('accomplishmentName').value = '';
+            document.getElementById('accomplishment-input-form').style.display = 'none';
+        }
+        function renderAccomplishments() {
+            const list = document.getElementById('accomplishments-list');
+            list.innerHTML = '';
+            accomplishments.forEach((acc, index) => {
+                const item = document.createElement('div');
+                item.className = 'job-item';
+                item.innerHTML = `
+                    <div class="job-info">
+                        <h4>${acc}</h4>
+                    </div>
+                    <div class="job-actions">
+                        <button onclick="deleteAccomplishment(${index})" title="Delete">🗑️</button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+        function deleteAccomplishment(index) {
+            if (confirm('Delete this accomplishment?')) {
+                accomplishments.splice(index, 1);
+                renderAccomplishments();
+            }
+        }
+
+        // Languages Functions
+        function showLanguageForm() {
+            document.getElementById('language-input-form').style.display = 'block';
+        }
+        function saveLanguage() {
+            const langName = document.getElementById('languageName').value.trim();
+            const langLevel = document.getElementById('languageLevel').value;
+            if (!langName) {
+                alert('Please enter a language');
+                return;
+            }
+            languages.push({ name: langName, level: langLevel });
+            renderLanguages();
+            document.getElementById('languageName').value = '';
+            document.getElementById('language-input-form').style.display = 'none';
+        }
+        function renderLanguages() {
+            const list = document.getElementById('languages-list');
+            list.innerHTML = '';
+            languages.forEach((lang, index) => {
+                const item = document.createElement('div');
+                item.className = 'job-item';
+                item.innerHTML = `
+                    <div class="job-info">
+                        <h4>${lang.name}</h4>
+                        <p>${lang.level}</p>
+                    </div>
+                    <div class="job-actions">
+                        <button onclick="deleteLanguage(${index})" title="Delete">🗑️</button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+        function deleteLanguage(index) {
+            if (confirm('Delete this language?')) {
+                languages.splice(index, 1);
+                renderLanguages();
+            }
+        }
+
+        // Hobbies Functions
+        function showHobbyForm() {
+            document.getElementById('hobby-input-form').style.display = 'block';
+        }
+        function saveHobby() {
+            const hobbyName = document.getElementById('hobbyName').value.trim();
+            if (!hobbyName) {
+                alert('Please enter a hobby');
+                return;
+            }
+            hobbies.push(hobbyName);
+            renderHobbies();
+            document.getElementById('hobbyName').value = '';
+            document.getElementById('hobby-input-form').style.display = 'none';
+        }
+        function renderHobbies() {
+            const list = document.getElementById('hobbies-list');
+            list.innerHTML = '';
+            hobbies.forEach((hobby, index) => {
+                const item = document.createElement('div');
+                item.className = 'job-item';
+                item.innerHTML = `
+                    <div class="job-info">
+                        <h4>${hobby}</h4>
+                    </div>
+                    <div class="job-actions">
+                        <button onclick="deleteHobby(${index})" title="Delete">🗑️</button>
+                    </div>
+                `;
+                list.appendChild(item);
+            });
+        }
+        function deleteHobby(index) {
+            if (confirm('Delete this hobby?')) {
+                hobbies.splice(index, 1);
+                renderHobbies();
+            }
         }
     </script>
 </body>
