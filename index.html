@@ -211,6 +211,36 @@
         .btn-next { padding: 12px 40px; background: var(--primary-color); color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; font-size: 15px; transition: 0.2s;}
         .btn-next:hover { background: var(--primary-hover); }
         
+        /* Skills Tags */
+        .skill-tag { 
+            background: var(--primary-color); 
+            color: white; 
+            padding: 10px 16px; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            font-weight: 500; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            transition: 0.2s;
+        }
+        .skill-tag:hover { background: var(--primary-hover); }
+        .skill-remove { 
+            background: rgba(255,255,255,0.3); 
+            border: none; 
+            border-radius: 50%; 
+            width: 20px; 
+            height: 20px; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            font-size: 14px; 
+            color: white; 
+            transition: 0.2s;
+        }
+        .skill-remove:hover { background: rgba(255,255,255,0.5); }
+        
         /* Preview Section */
         .preview-section { flex: 1; display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding-bottom: 20px;}
         .cv-document { width: 100%; max-width: 600px; background: white; min-height: 800px; border-radius: 10px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); display: flex; overflow: hidden; transition: 0.4s ease; }
@@ -244,7 +274,7 @@
 <body>
 
     <header>
-        <img src="Logo.png" alt="Huntbl Logo" class="logo-img" onclick="goToHome()">
+        <img src="logo.png" alt="Huntbl Logo" class="logo-img" onclick="goToHome()">
         <div class="home-actions" id="home-nav">
             <button class="btn-login">Login</button>
             <div class="lang-wrapper">
@@ -260,7 +290,7 @@
             <span id="nav-1" class="active" onclick="goToStep(1)"><div class="step-num">1</div> Personal info</span>
             <span id="nav-2" onclick="goToStep(2)"><div class="step-num">2</div> Experience</span>
             <span id="nav-3" onclick="goToStep(3)"><div class="step-num">3</div> Education</span>
-            <span id="nav-4"><div class="step-num">4</div> Skills</span>
+            <span id="nav-4" onclick="goToStep(4)"><div class="step-num">4</div> Skills</span>
         </div>
     </header>
 
@@ -426,11 +456,54 @@
                 </div>
 
                 <div id="step-3" class="step-container">
-                    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 8px;">Education</h1>
-                    <p style="color: #64748b; margin-bottom: 35px;">List relevant degrees, diplomas and certificates.</p>
+                    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 8px; color: #1e293b;">Education</h1>
+                    <p style="color: #64748b; margin-bottom: 35px; font-size: 15px;">List relevant degrees, diplomas and certificates.</p>
+                    
+                    <div id="education-list" class="jobs-list">
+                        <!-- Education items will be added here dynamically -->
+                    </div>
+
+                    <button class="btn-add-job" onclick="toggleEducationForm()">
+                        <span style="font-size: 20px;">⊕</span> Add Education
+                    </button>
+
+                    <div id="education-form" style="display: none;">
+                        <div class="input-group">
+                            <div class="input-field"><label>Degree / Certificate</label><input type="text" id="degree" placeholder="e.g. Bachelor of Computer Science"></div>
+                            <div class="input-field"><label>Institution Name</label><input type="text" id="institution" placeholder="e.g. Technical University Berlin"></div>
+                        </div>
+                        <div class="input-group" style="margin-bottom: 20px;">
+                            <div class="input-field"><label>Start Date</label><input type="text" id="eduStartDate" placeholder="e.g. Sep 2014"></div>
+                            <div class="input-field"><label>End Date</label><input type="text" id="eduEndDate" placeholder="e.g. Jun 2018"></div>
+                        </div>
+                        <button class="btn-next" onclick="saveEducation()" style="width: 100%; margin-bottom: 15px;">Save Education</button>
+                    </div>
+
                     <div class="action-buttons">
                         <button class="btn-back" onclick="goToStep(2)">&lt; Back</button>
-                        <button class="btn-next">Next &gt;</button>
+                        <button class="btn-next" onclick="goToStep(4)">Next &gt;</button>
+                    </div>
+                </div>
+
+                <div id="step-4" class="step-container">
+                    <h1 style="font-size: 28px; font-weight: bold; margin-bottom: 8px; color: #1e293b;">Skills</h1>
+                    <p style="color: #64748b; margin-bottom: 35px; font-size: 15px;">Add your professional skills and competencies.</p>
+                    
+                    <div class="input-field" style="margin-bottom: 20px;">
+                        <label>Add a skill</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="text" id="skillInput" placeholder="e.g. JavaScript, Project Management, Adobe Photoshop" style="flex: 1;">
+                            <button class="btn-next" onclick="addSkill()" style="width: auto; padding: 14px 30px;">Add</button>
+                        </div>
+                    </div>
+
+                    <div id="skills-container" style="display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; min-height: 100px; padding: 20px; background: #f8fafc; border-radius: 12px; border: 1px solid #e2e8f0;">
+                        <!-- Skills will be added here -->
+                    </div>
+
+                    <div class="action-buttons">
+                        <button class="btn-back" onclick="goToStep(3)">&lt; Back</button>
+                        <button class="btn-next" onclick="downloadCV()">Download CV</button>
                     </div>
                 </div>
 
@@ -467,6 +540,24 @@
                                 </div>
                             </div>
                         </div>
+                        
+                        <h4 style="border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 15px; font-size: 16px; font-weight: bold; margin-top: 30px;">Education</h4>
+                        <div id="preview-education">
+                            <div style="margin-bottom: 20px;">
+                                <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                    <strong style="font-size: 13px;">Bachelor of Computer Science</strong>
+                                    <span style="font-size: 11px; opacity: 0.6;">2014 - 2018</span>
+                                </div>
+                                <div style="font-size: 12px; opacity: 0.8;">Technical University Berlin</div>
+                            </div>
+                        </div>
+                        
+                        <h4 style="border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 8px; margin-bottom: 15px; font-size: 16px; font-weight: bold; margin-top: 30px;">Skills</h4>
+                        <div id="preview-skills" style="display: flex; flex-wrap: wrap; gap: 8px; font-size: 11px;">
+                            <span style="background: rgba(124, 58, 237, 0.15); color: var(--primary-color); padding: 6px 12px; border-radius: 6px; font-weight: 500;">JavaScript</span>
+                            <span style="background: rgba(124, 58, 237, 0.15); color: var(--primary-color); padding: 6px 12px; border-radius: 6px; font-weight: 500;">React</span>
+                            <span style="background: rgba(124, 58, 237, 0.15); color: var(--primary-color); padding: 6px 12px; border-radius: 6px; font-weight: 500;">Node.js</span>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -476,7 +567,10 @@
     <script>
         /* --- GLOBAL STATE --- */
         let jobs = [];
+        let education = [];
+        let skills = [];
         let editingJobIndex = null;
+        let editingEducationIndex = null;
 
         /* --- VIEW NAVIGATION --- */
         function hideAllViews() {
@@ -840,6 +934,176 @@
             document.getElementById('preview-photo-container').style.display = 'none';
             document.getElementById('preview-photo-img').src = '';
             fileInput.value = '';
+        }
+
+        /* --- EDUCATION MANAGEMENT --- */
+        function toggleEducationForm() {
+            const form = document.getElementById('education-form');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+            if (form.style.display === 'block') {
+                clearEducationForm();
+            }
+        }
+
+        function clearEducationForm() {
+            document.getElementById('degree').value = '';
+            document.getElementById('institution').value = '';
+            document.getElementById('eduStartDate').value = '';
+            document.getElementById('eduEndDate').value = '';
+            editingEducationIndex = null;
+        }
+
+        function saveEducation() {
+            const degree = document.getElementById('degree').value;
+            const institution = document.getElementById('institution').value;
+            const startDate = document.getElementById('eduStartDate').value;
+            const endDate = document.getElementById('eduEndDate').value;
+
+            if (!degree || !institution) {
+                alert('Please fill in Degree and Institution Name');
+                return;
+            }
+
+            const edu = { degree, institution, startDate, endDate };
+
+            if (editingEducationIndex !== null) {
+                education[editingEducationIndex] = edu;
+                editingEducationIndex = null;
+            } else {
+                education.push(edu);
+            }
+
+            renderEducation();
+            updateEducationPreview();
+            toggleEducationForm();
+        }
+
+        function renderEducation() {
+            const eduList = document.getElementById('education-list');
+            eduList.innerHTML = '';
+
+            education.forEach((edu, index) => {
+                const eduItem = document.createElement('div');
+                eduItem.className = 'job-item';
+                eduItem.innerHTML = `
+                    <div class="job-info">
+                        <h4><span>☰</span> ${edu.degree}</h4>
+                        <p>${edu.institution} | ${edu.startDate} - ${edu.endDate}</p>
+                    </div>
+                    <div class="job-actions">
+                        <button onclick="editEducation(${index})" title="Edit">✏️</button>
+                        <button onclick="deleteEducation(${index})" title="Delete">🗑️</button>
+                    </div>
+                `;
+                eduList.appendChild(eduItem);
+            });
+        }
+
+        function editEducation(index) {
+            const edu = education[index];
+            document.getElementById('degree').value = edu.degree;
+            document.getElementById('institution').value = edu.institution;
+            document.getElementById('eduStartDate').value = edu.startDate;
+            document.getElementById('eduEndDate').value = edu.endDate;
+            
+            editingEducationIndex = index;
+            document.getElementById('education-form').style.display = 'block';
+        }
+
+        function deleteEducation(index) {
+            if (confirm('Are you sure you want to delete this education entry?')) {
+                education.splice(index, 1);
+                renderEducation();
+                updateEducationPreview();
+            }
+        }
+
+        function updateEducationPreview() {
+            const previewEdu = document.getElementById('preview-education');
+            previewEdu.innerHTML = '';
+
+            education.forEach(edu => {
+                const eduItem = document.createElement('div');
+                eduItem.style.marginBottom = '20px';
+                eduItem.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                        <strong style="font-size: 13px;">${edu.degree}</strong>
+                        <span style="font-size: 11px; opacity: 0.6;">${edu.startDate} - ${edu.endDate}</span>
+                    </div>
+                    <div style="font-size: 12px; opacity: 0.8;">${edu.institution}</div>
+                `;
+                previewEdu.appendChild(eduItem);
+            });
+        }
+
+        /* --- SKILLS MANAGEMENT --- */
+        function addSkill() {
+            const skillInput = document.getElementById('skillInput');
+            const skillValue = skillInput.value.trim();
+            
+            if (!skillValue) {
+                alert('Please enter a skill');
+                return;
+            }
+
+            if (skills.includes(skillValue)) {
+                alert('This skill has already been added');
+                return;
+            }
+
+            skills.push(skillValue);
+            renderSkills();
+            updateSkillsPreview();
+            skillInput.value = '';
+        }
+
+        function renderSkills() {
+            const skillsContainer = document.getElementById('skills-container');
+            skillsContainer.innerHTML = '';
+
+            skills.forEach((skill, index) => {
+                const skillTag = document.createElement('div');
+                skillTag.className = 'skill-tag';
+                skillTag.innerHTML = `
+                    ${skill}
+                    <button class="skill-remove" onclick="removeSkill(${index})" title="Remove">×</button>
+                `;
+                skillsContainer.appendChild(skillTag);
+            });
+        }
+
+        function removeSkill(index) {
+            skills.splice(index, 1);
+            renderSkills();
+            updateSkillsPreview();
+        }
+
+        function updateSkillsPreview() {
+            const previewSkills = document.getElementById('preview-skills');
+            previewSkills.innerHTML = '';
+
+            skills.forEach(skill => {
+                const skillSpan = document.createElement('span');
+                skillSpan.style.cssText = 'background: rgba(124, 58, 237, 0.15); color: var(--primary-color); padding: 6px 12px; border-radius: 6px; font-weight: 500;';
+                skillSpan.textContent = skill;
+                previewSkills.appendChild(skillSpan);
+            });
+        }
+
+        // Allow pressing Enter to add skill
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillInput = document.getElementById('skillInput');
+            if (skillInput) {
+                skillInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        addSkill();
+                    }
+                });
+            }
+        });
+
+        function downloadCV() {
+            alert('CV download feature will be implemented. This will generate a PDF of your CV.');
         }
     </script>
 </body>
