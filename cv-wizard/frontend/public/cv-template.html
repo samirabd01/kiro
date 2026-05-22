@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CV Template</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      background: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      padding: 32px;
+    }
+
+    .cv-page {
+      width: 595px;
+      min-height: 842px;
+      background: #fff;
+      padding: 40px 35px;
+      position: relative;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+
+    /* ── HEADER ── */
+    .cv-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 6px;
+    }
+
+    .cv-header .name-block .name {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #000;
+    }
+
+    .cv-header .name-block .tagline {
+      font-size: 8.5px;
+      color: #575757;
+      margin-top: 2px;
+      letter-spacing: 0.2px;
+    }
+
+    .cv-header .logo-block {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      font-size: 7px;
+      color: #575757;
+    }
+
+    .cv-header .logo-block .powered-by {
+      font-size: 7px;
+      color: #575757;
+      margin-bottom: 2px;
+    }
+
+    .cv-header .logo-block .brand {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .cv-header .logo-block .brand .logo-icon {
+      width: 15px;
+      height: 15px;
+      background: #6E4FE9;
+      border-radius: 3px;
+    }
+
+    .cv-header .logo-block .brand span {
+      font-size: 9px;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      color: #111;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid #E3E3E3;
+      margin: 8px 0;
+    }
+
+    /* ── CONTACT BAR ── */
+    .contact-bar {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      font-size: 7.5px;
+      color: #575757;
+      margin: 6px 0 4px;
+    }
+
+    .contact-bar span {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+    }
+
+    .contact-bar .icon {
+      width: 10px;
+      height: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: #000;
+      margin: 10px 0 5px;
+    }
+
+    /* ── TWO-COL LAYOUT ── */
+    .two-col {
+      display: flex;
+      gap: 16px;
+    }
+
+    .col-left  { flex: 1; }
+    .col-right { width: 160px; flex-shrink: 0; }
+
+    /* ── SUMMARY ── */
+    .summary-text {
+      font-size: 7.5px;
+      color: #575757;
+      line-height: 1.55;
+    }
+
+    /* ── EXPERIENCE / EDUCATION ITEM ── */
+    .entry {
+      margin-bottom: 8px;
+    }
+
+    .entry-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .entry-title {
+      font-size: 8.5px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .entry-date {
+      font-size: 7px;
+      color: #575757;
+      white-space: nowrap;
+    }
+
+    .entry-sub {
+      font-size: 7.5px;
+      color: #575757;
+      margin-top: 1px;
+    }
+
+    .entry-desc {
+      font-size: 7px;
+      color: #575757;
+      margin-top: 3px;
+      line-height: 1.5;
+    }
+
+    /* ── SKILLS ── */
+    .skill-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 5px;
+    }
+
+    .skill-name {
+      font-size: 7.5px;
+      color: #575757;
+    }
+
+    .skill-dots {
+      display: flex;
+      gap: 3px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 4px;
+      border-radius: 1px;
+      background: #575757;
+    }
+
+    .dot.empty {
+      background: #D9D9D9;
+    }
+
+    /* ── SIDEBAR ITEMS (Languages, Hobbies…) ── */
+    .sidebar-item {
+      margin-bottom: 8px;
+    }
+
+    .sidebar-label {
+      font-size: 7.5px;
+      color: #575757;
+      margin-bottom: 3px;
+    }
+
+    /* ── CERT / ACCOMPLISHMENT ITEM ── */
+    .list-item {
+      font-size: 7.5px;
+      color: #575757;
+      margin-bottom: 4px;
+      display: flex;
+      gap: 5px;
+    }
+
+    .list-item::before {
+      content: '•';
+      color: #575757;
+      flex-shrink: 0;
+    }
+
+    /* ── LOCATION ICON ── */
+    .loc-icon {
+      color: #575757;
+      font-size: 9px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="cv-page">
+
+  <!-- ══ HEADER ══ -->
+  <div class="cv-header">
+    <div class="name-block">
+      <div class="name">Jonathan MiIlath</div>
+      <div class="tagline">Senior Software Engineer &nbsp;|&nbsp; Senior Marketing Manager</div>
+    </div>
+    <div class="logo-block">
+      <span class="powered-by">Powered by</span>
+      <div class="brand">
+        <div class="logo-icon"></div>
+        <span>hub<strong>n</strong>bl</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ══ CONTACT BAR ══ -->
+  <div class="contact-bar">
+    <span>📞 +1 (555) 000-0000</span>
+    <span>✉ jonathan@email.com</span>
+    <span>🔗 linkedin.com/in/jonathan</span>
+    <span>📍 New York, USA</span>
+    <span>🌐 jonathan.com</span>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ══ MAIN CONTENT (2-col) ══ -->
+  <div class="two-col">
+
+    <!-- ── LEFT COLUMN ── -->
+    <div class="col-left">
+
+      <!-- SUMMARY -->
+      <div class="section-title">Summary</div>
+      <p class="summary-text">
+        Experienced software engineer with over 10 years of expertise in full-stack development,
+        cloud architecture, and agile methodologies. Passionate about building scalable products
+        and leading cross-functional teams to deliver high-quality solutions.
+      </p>
+
+      <hr class="divider" />
+
+      <!-- EXPERIENCE -->
+      <div class="section-title">Experience</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Senior Software Engineer</span>
+          <span class="entry-date">Jan 2020 – Present</span>
+        </div>
+        <div class="entry-sub">Tech Corp Inc. &nbsp;·&nbsp; New York, USA</div>
+        <div class="entry-desc">
+          Led development of microservices architecture serving 2M+ users.
+          Mentored junior developers and conducted code reviews.
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Software Engineer</span>
+          <span class="entry-date">Mar 2017 – Dec 2019</span>
+        </div>
+        <div class="entry-sub">StartupXYZ &nbsp;·&nbsp; San Francisco, USA</div>
+        <div class="entry-desc">
+          Built RESTful APIs and React front-end features.
+          Reduced load time by 40% through performance optimizations.
+        </div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">Junior Developer</span>
+          <span class="entry-date">Jun 2015 – Feb 2017</span>
+        </div>
+        <div class="entry-sub">WebAgency &nbsp;·&nbsp; Boston, USA</div>
+        <div class="entry-desc">
+          Developed client websites using HTML, CSS, JavaScript and PHP.
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- EDUCATION -->
+      <div class="section-title">Education Overview</div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">B.Sc. Computer Science</span>
+          <span class="entry-date">2011 – 2015</span>
+        </div>
+        <div class="entry-sub">MIT · Cambridge, USA</div>
+      </div>
+
+      <div class="entry">
+        <div class="entry-header">
+          <span class="entry-title">M.Sc. Software Engineering</span>
+          <span class="entry-date">2015 – 2017</span>
+        </div>
+        <div class="entry-sub">Stanford University · Palo Alto, USA</div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- CERTIFICATIONS -->
+      <div class="section-title">Certifications</div>
+      <div class="list-item">AWS Certified Solutions Architect – Associate (2022)</div>
+      <div class="list-item">Google Professional Cloud Developer (2021)</div>
+      <div class="list-item">Certified Kubernetes Administrator (CKA) (2020)</div>
+
+      <hr class="divider" />
+
+      <!-- ACCOMPLISHMENTS -->
+      <div class="section-title">Accomplishments</div>
+      <div class="list-item">Best Developer Award – Tech Corp Inc. 2022</div>
+      <div class="list-item">Speaker at AWS re:Invent 2021</div>
+      <div class="list-item">Open-source contributor – 1,200+ GitHub stars</div>
+
+    </div><!-- /col-left -->
+
+    <!-- ── RIGHT COLUMN ── -->
+    <div class="col-right">
+
+      <!-- SKILLS -->
+      <div class="section-title">Skills</div>
+
+      <div class="skill-row">
+        <span class="skill-name">JavaScript</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">TypeScript</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">React</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Node.js</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot empty"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Python</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot empty"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Docker / K8s</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">AWS / GCP</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot empty"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- LANGUAGES -->
+      <div class="section-title">Languages</div>
+
+      <div class="skill-row">
+        <span class="skill-name">English</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">Spanish</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot"></div><div class="dot empty"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+      <div class="skill-row">
+        <span class="skill-name">French</span>
+        <div class="skill-dots">
+          <div class="dot"></div><div class="dot"></div>
+          <div class="dot empty"></div><div class="dot empty"></div>
+          <div class="dot empty"></div>
+        </div>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- HOBBIES & INTERESTS -->
+      <div class="section-title">Hobbies &amp; Interests</div>
+      <div class="list-item">Open-source development</div>
+      <div class="list-item">Hiking &amp; outdoor activities</div>
+      <div class="list-item">Photography</div>
+      <div class="list-item">Reading tech blogs</div>
+
+      <hr class="divider" />
+
+      <!-- OTHER SECTIONS -->
+      <div class="section-title">Other Sections</div>
+      <div class="list-item">Volunteer – Code for Good (2019–2021)</div>
+      <div class="list-item">Mentor – Girls Who Code</div>
+
+    </div><!-- /col-right -->
+
+  </div><!-- /two-col -->
+
+</div><!-- /cv-page -->
+
+</body>
+</html>
