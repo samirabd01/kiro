@@ -1,0 +1,212 @@
+/* Payment Page */
+
+.payment-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  position: relative;
+  padding: 40px 20px;
+  background: #0f172a;
+  overflow: hidden;
+}
+
+.payment-container {
+  position: relative;
+  z-index: 1;
+  max-width: 860px;
+  width: 100%;
+}
+
+.payment-layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Payment Card */
+.payment-card {
+  background: #1a2234;
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  border-radius: 20px;
+  padding: 32px;
+}
+
+.payment-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #f1f5f9;
+  margin-bottom: 6px;
+}
+
+.payment-subtitle {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 28px;
+}
+
+/* Pay Methods */
+.pay-methods {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.pay-method {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  background: rgba(15, 23, 42, 0.5);
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.pay-method:hover {
+  border-color: rgba(124, 58, 237, 0.4);
+  color: #94a3b8;
+}
+
+.pay-method.active {
+  background: rgba(124, 58, 237, 0.15);
+  border-color: rgba(124, 58, 237, 0.5);
+  color: #c4b5fd;
+}
+
+/* Wallet Pay */
+.wallet-pay {
+  padding: 32px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.wallet-info p {
+  font-size: 14px;
+  color: #64748b;
+  margin-top: 12px;
+}
+
+/* Pay Button */
+.pay-btn {
+  font-size: 16px !important;
+  padding: 16px !important;
+}
+
+.payment-security {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #475569;
+  margin-top: 12px;
+}
+
+/* Order Summary */
+.order-summary {
+  background: #1a2234;
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  border-radius: 20px;
+  padding: 28px;
+}
+
+.summary-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f1f5f9;
+  margin-bottom: 20px;
+}
+
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.order-item-info {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.order-item-icon {
+  font-size: 28px;
+}
+
+.order-item-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.order-item-desc {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.order-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.order-divider {
+  height: 1px;
+  background: rgba(51, 65, 85, 0.5);
+  margin: 16px 0;
+}
+
+.order-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.feature-row {
+  font-size: 13px;
+  color: #94a3b8;
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+.total-price {
+  font-size: 20px;
+  color: #10b981;
+}
+
+.money-back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 16px;
+  padding: 10px;
+  background: rgba(16, 185, 129, 0.08);
+  border-radius: 8px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+@media (max-width: 768px) {
+  .payment-layout {
+    grid-template-columns: 1fr;
+  }
+}

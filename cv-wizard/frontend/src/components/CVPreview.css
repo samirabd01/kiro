@@ -1,0 +1,217 @@
+/* CV Document Preview */
+
+.cv-document {
+  width: 794px;
+  min-height: 1123px;
+  background: white;
+  border-radius: 4px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  padding: 48px;
+  color: #1e293b;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* Header */
+.cv-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding-bottom: 20px;
+  border-bottom: 2px solid var(--accent, #7c3aed);
+  margin-bottom: 24px;
+  gap: 20px;
+}
+
+.cv-header-left {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.cv-photo {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--accent, #7c3aed);
+}
+
+.cv-name-block {}
+
+.cv-name {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 4px;
+  line-height: 1.1;
+}
+
+.cv-job-title {
+  font-size: 13px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.cv-header-right {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  text-align: right;
+}
+
+.cv-contact-item {
+  font-size: 11px;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: flex-end;
+}
+
+.cv-contact-item span:first-child {
+  font-size: 10px;
+}
+
+/* Body */
+.cv-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+/* Sections */
+.cv-section {
+  margin-bottom: 20px;
+}
+
+.cv-section-title {
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--accent, #7c3aed);
+}
+
+/* Summary */
+.cv-summary {
+  font-size: 11px;
+  color: #334155;
+  line-height: 1.6;
+}
+
+/* Entry */
+.cv-entry {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.cv-entry:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.cv-entry-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.cv-entry-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2px;
+}
+
+.cv-entry-org {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.cv-entry-date {
+  font-size: 10px;
+  color: #94a3b8;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.cv-entry-desc {
+  font-size: 11px;
+  color: #475569;
+  line-height: 1.5;
+  margin-top: 4px;
+}
+
+/* Skills */
+.cv-skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cv-skill-tag {
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+/* Small entry */
+.cv-entry-small {
+  font-size: 11px;
+  color: #334155;
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #f8fafc;
+}
+
+.cv-entry-small:last-child {
+  border-bottom: none;
+}
+
+/* Languages */
+.cv-languages {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cv-language-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+}
+
+.cv-lang-name {
+  color: #334155;
+  font-weight: 600;
+}
+
+.cv-lang-level {
+  font-weight: 500;
+  font-size: 10px;
+}
+
+/* Hobbies */
+.cv-hobbies {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.cv-hobby-tag {
+  padding: 3px 10px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  font-size: 11px;
+  color: #475569;
+}

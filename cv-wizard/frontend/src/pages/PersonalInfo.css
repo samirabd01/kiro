@@ -1,0 +1,132 @@
+/* Personal Info */
+
+.personal-info-container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* Photo Section */
+.photo-section {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.photo-upload {
+  width: 110px;
+  height: 110px;
+  border-radius: 16px;
+  border: 2px dashed rgba(51, 65, 85, 0.8);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.photo-upload:hover {
+  border-color: rgba(124, 58, 237, 0.5);
+  background: rgba(124, 58, 237, 0.05);
+}
+
+.photo-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.photo-icon {
+  color: #475569;
+  width: 36px;
+  height: 36px;
+}
+
+.photo-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.photo-text {
+  font-size: 12px;
+  font-weight: 600;
+  color: #64748b;
+}
+
+.photo-subtext {
+  font-size: 10px;
+  color: #475569;
+}
+
+.photo-preview-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-actions {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.photo-preview-container:hover .photo-actions {
+  opacity: 1;
+}
+
+.photo-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s;
+}
+
+.photo-btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.photo-btn-danger:hover {
+  background: rgba(239, 68, 68, 0.4);
+}
+
+/* Form Grid */
+.form-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
