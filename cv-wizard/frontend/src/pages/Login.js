@@ -12,7 +12,7 @@ const Login = () => {
 
   useEffect(() => {
     inputRefs[0].current?.focus();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (countdown > 0) {

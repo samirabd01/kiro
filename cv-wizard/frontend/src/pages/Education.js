@@ -3,7 +3,7 @@ import WizardLayout from '../components/WizardLayout';
 import { useCVContext } from '../context/CVContext';
 
 const Education = () => {
-  const { addEducation, nextStep, prevStep, goToStep } = useCVContext();
+  const { addEducation, prevStep, goToStep } = useCVContext();
   const [form, setForm] = useState({
     degree: '',
     school: '',
