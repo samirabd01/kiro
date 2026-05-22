@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/kiro/static/css/main.1abb619e.css",
+    "main.js": "/kiro/static/js/main.20dbab92.js",
+    "index.html": "/kiro/index.html",
+    "main.1abb619e.css.map": "/kiro/static/css/main.1abb619e.css.map",
+    "main.20dbab92.js.map": "/kiro/static/js/main.20dbab92.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1abb619e.css",
+    "static/js/main.20dbab92.js"
+  ]
+}
