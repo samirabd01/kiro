@@ -631,12 +631,12 @@
             }
         }
 
-        /* ===== PREVIEW PAGE STYLES ===== */
+        /* ===== PREVIEW PAGE STYLES (Preview.png design) ===== */
         #view-preview {
             display: none !important;
             flex-direction: column;
             height: 100vh;
-            background: #f1f5f9;
+            background: #f5f6fa;
             overflow: hidden;
         }
         #view-preview.active {
@@ -647,22 +647,30 @@
         .preview-topbar {
             background: white;
             padding: 0 32px;
-            height: 68px;
+            height: 70px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
             z-index: 10;
             flex-shrink: 0;
+            border-bottom: 1px solid #ececf0;
         }
         .preview-topbar-left {
             display: flex;
             align-items: center;
             gap: 16px;
+            min-width: 200px;
+        }
+        .preview-topbar-logo {
+            font-size: 20px;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
         }
         .preview-back-btn {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 10px;
             border: 1px solid #e2e8f0;
             background: white;
@@ -670,44 +678,353 @@
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            font-size: 20px;
+            font-size: 22px;
             color: #475569;
             transition: 0.2s;
             text-decoration: none;
+            line-height: 1;
         }
         .preview-back-btn:hover {
             border-color: var(--primary-color);
             color: var(--primary-color);
             background: #f3f0ff;
         }
-        .preview-topbar-title {
-            font-size: 20px;
-            font-weight: 700;
-            color: #1e293b;
-        }
-        .preview-topbar-actions {
+
+        /* Center: Editing your CV stepper */
+        .preview-topbar-center {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
+            flex: 1;
+            justify-content: center;
+        }
+        .preview-edit-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            white-space: nowrap;
+        }
+        .preview-stepper {
+            display: flex;
+            align-items: center;
+            gap: 0;
+        }
+        .preview-step-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            background: #e8eaef;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+        .preview-step-num.completed {
+            background: #22c55e;
+            color: white;
+        }
+        .preview-step-num.current {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.18);
+        }
+        .preview-step-line {
+            width: 18px;
+            height: 2px;
+            background: #e8eaef;
+        }
+        .preview-step-line.completed {
+            background: #22c55e;
+        }
+        .preview-step-current-label {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0 6px;
+            white-space: nowrap;
+        }
+
+        /* Right: bell + avatar */
+        .preview-topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            min-width: 200px;
+            justify-content: flex-end;
+        }
+        .preview-icon-btn {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: #f5f6fa;
+            border: 1px solid #ececf0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #64748b;
+            transition: 0.2s;
+        }
+        .preview-icon-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: #f3f0ff;
+        }
+        .preview-icon-btn svg {
+            width: 18px;
+            height: 18px;
+        }
+        .preview-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* Preview Body - 3 columns */
+        .preview-body {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+
+        /* Left sidebar - Sections list */
+        .preview-left-sidebar {
+            width: 270px;
+            flex-shrink: 0;
+            background: white;
+            border-right: 1px solid #ececf0;
+            padding: 24px 18px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .preview-profile-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 14px 8px 18px;
+            border-bottom: 1px solid #ececf0;
+        }
+        .preview-profile-label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .preview-profile-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        .preview-profile-name {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 3px;
+        }
+        .preview-profile-title {
+            font-size: 12px;
+            color: #64748b;
+            font-weight: 500;
+        }
+        .preview-sections-label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 0 4px;
+        }
+        .preview-section-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #f8f9fc;
+            border: 1px solid transparent;
+        }
+        .preview-section-item:hover {
+            background: #f3f0ff;
+            border-color: rgba(124, 58, 237, 0.2);
+        }
+        .preview-section-item.active {
+            background: #f3f0ff;
+            border-color: var(--primary-color);
+        }
+        .preview-section-check {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            flex-shrink: 0;
+        }
+        .preview-section-check svg { width: 12px; height: 12px; }
+        .preview-section-check.empty {
+            background: #cbd5e1;
+        }
+        .preview-section-name {
+            flex: 1;
+            font-size: 13px;
+            font-weight: 600;
+            color: #334155;
+        }
+        .preview-section-edit {
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #94a3b8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.2s;
+        }
+        .preview-section-edit:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+        .preview-section-edit svg { width: 14px; height: 14px; }
+        .preview-add-section-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px;
+            border: 2px dashed #cbd5e1;
+            border-radius: 10px;
+            background: transparent;
+            color: #64748b;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            margin-top: 8px;
+        }
+        .preview-add-section-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+            background: #f3f0ff;
+        }
+
+        /* Main CV area */
+        .preview-main-area {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 28px 32px;
+            min-width: 0;
+        }
+        .preview-cv-wrapper {
+            width: 100%;
+            max-width: 720px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .preview-cv-page {
+            background: white;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+            border-radius: 6px;
+            overflow: hidden;
+            width: 100%;
+            margin-bottom: 24px;
+        }
+
+        /* Footer action bar (Print / Download / Save) */
+        .preview-action-bar {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            padding: 4px 0 8px;
+            width: 100%;
+            max-width: 720px;
         }
         .preview-action-btn {
             display: flex;
             align-items: center;
             gap: 8px;
-            padding: 10px 20px;
+            padding: 12px 26px;
             border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.2s;
-            border: none;
+            border: 1px solid transparent;
             white-space: nowrap;
+            min-width: 130px;
+            justify-content: center;
         }
         .preview-action-btn svg {
             width: 18px;
             height: 18px;
             flex-shrink: 0;
         }
+        .preview-action-btn.btn-soft {
+            background: #ecfdf5;
+            color: #047857;
+            border-color: #d1fae5;
+        }
+        .preview-action-btn.btn-soft:hover {
+            background: #d1fae5;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.18);
+        }
+        .preview-action-btn.btn-soft:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .preview-action-btn.btn-save {
+            background: #22c55e;
+            color: white;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.32);
+        }
+        .preview-action-btn.btn-save:hover {
+            background: #16a34a;
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(34, 197, 94, 0.42);
+        }
+        .preview-action-btn.btn-save:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        /* keep legacy classes used elsewhere */
         .preview-action-btn.btn-download {
             background: var(--primary-color);
             color: white;
@@ -716,7 +1033,6 @@
         .preview-action-btn.btn-download:hover {
             background: var(--primary-hover);
             transform: translateY(-1px);
-            box-shadow: 0 6px 16px rgba(124, 58, 237, 0.4);
         }
         .preview-action-btn.btn-outline {
             background: white;
@@ -727,48 +1043,19 @@
             border-color: var(--primary-color);
             color: var(--primary-color);
             background: #f3f0ff;
-            transform: translateY(-1px);
         }
 
-        /* Preview Body */
-        .preview-body {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-
-        /* Main CV area */
-        .preview-main-area {
-            flex: 1;
-            overflow-y: auto;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 36px 32px;
-        }
-        .preview-cv-wrapper {
-            width: 100%;
-            max-width: 680px;
-        }
-        .preview-cv-page {
-            background: white;
-            box-shadow: 0 8px 40px rgba(0,0,0,0.12);
-            border-radius: 4px;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        /* Right sidebar thumbnails */
+        /* Right sidebar - Templates */
         .preview-sidebar {
-            width: 200px;
+            width: 290px;
             flex-shrink: 0;
-            background: #f8fafc;
-            border-left: 1px solid #e2e8f0;
-            padding: 24px 16px;
+            background: white;
+            border-left: 1px solid #ececf0;
+            padding: 22px 18px 24px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 14px;
         }
         .preview-sidebar-label {
             font-size: 11px;
@@ -777,7 +1064,112 @@
             text-transform: uppercase;
             letter-spacing: 0.08em;
             margin-bottom: 4px;
+            padding: 0 4px;
         }
+        .preview-browse-templates-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 14px;
+            background: #1e293b;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 8px rgba(30, 41, 59, 0.18);
+        }
+        .preview-browse-templates-btn:hover {
+            background: #0f172a;
+            transform: translateY(-1px);
+        }
+        .preview-browse-templates-btn svg { width: 16px; height: 16px; }
+        .preview-templates-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+        .preview-template-card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 2px solid #ececf0;
+            cursor: pointer;
+            position: relative;
+            aspect-ratio: 1 / 1.32;
+            transition: 0.2s;
+        }
+        .preview-template-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(124, 58, 237, 0.18);
+        }
+        .preview-template-card.selected {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 16px rgba(124, 58, 237, 0.22);
+        }
+        .preview-template-card.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 20px;
+            height: 20px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+        }
+        .preview-template-card img,
+        .preview-template-card-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .preview-template-card-bg {
+            background: #f8f9fc;
+            padding: 8px 6px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            font-size: 6px;
+            line-height: 1.4;
+            color: #475569;
+            overflow: hidden;
+        }
+        .preview-template-card-name {
+            font-weight: 700;
+            font-size: 7px;
+            color: #1e293b;
+            margin-bottom: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        .preview-template-card-title {
+            font-size: 5px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        .preview-template-card-line {
+            width: 80%;
+            height: 1.5px;
+            background: #cbd5e1;
+            margin: 1.5px 0;
+        }
+        .preview-template-card-line.short { width: 50%; }
+        .preview-template-card-line.dark { background: #334155; height: 2px; }
+
+        /* legacy styles (still used by JS thumbnail builder) */
         .preview-thumb {
             background: white;
             border-radius: 6px;
@@ -825,6 +1217,19 @@
             border-color: var(--primary-color);
             color: var(--primary-color);
             background: #f3f0ff;
+        }
+
+        @media (max-width: 1100px) {
+            .preview-left-sidebar { width: 220px; }
+            .preview-sidebar { width: 230px; }
+            .preview-topbar-center { gap: 8px; }
+            .preview-topbar-left, .preview-topbar-right { min-width: 0; }
+        }
+        @media (max-width: 900px) {
+            .preview-left-sidebar { display: none; }
+            .preview-sidebar { display: none; }
+            .preview-topbar-center { display: none; }
+            .preview-action-btn { padding: 10px 16px; min-width: 110px; }
         }
 
         /* Share modal */
@@ -1653,30 +2058,99 @@
         <div class="preview-topbar">
             <div class="preview-topbar-left">
                 <button class="preview-back-btn" onclick="goBackFromPreview()" title="Back">&#8249;</button>
-                <span class="preview-topbar-title">Preview</span>
+                <span class="preview-topbar-logo">Huntbl</span>
             </div>
-            <div class="preview-topbar-actions">
-                <button class="preview-action-btn btn-outline" onclick="emailCV()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                    <span>Email</span>
+            <div class="preview-topbar-center">
+                <span class="preview-edit-label">Editing your CV</span>
+                <div class="preview-stepper">
+                    <div class="preview-step-num completed">1</div>
+                    <div class="preview-step-line completed"></div>
+                    <div class="preview-step-num completed">2</div>
+                    <div class="preview-step-line completed"></div>
+                    <div class="preview-step-num completed">3</div>
+                    <div class="preview-step-line completed"></div>
+                    <div class="preview-step-num completed">4</div>
+                    <div class="preview-step-line completed"></div>
+                    <div class="preview-step-num completed">5</div>
+                    <div class="preview-step-line completed"></div>
+                    <div class="preview-step-num completed">6</div>
+                    <div class="preview-step-line completed"></div>
+                    <div class="preview-step-num completed">7</div>
+                </div>
+                <span class="preview-step-current-label">Preview</span>
+                <div class="preview-stepper">
+                    <div class="preview-step-num">9</div>
+                </div>
+            </div>
+            <div class="preview-topbar-right">
+                <button class="preview-icon-btn" title="Notifications">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
                 </button>
-                <button class="preview-action-btn btn-outline" onclick="printCV()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
-                    <span>Print</span>
-                </button>
-                <button class="preview-action-btn btn-outline" onclick="shareCV()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-                    <span>Share</span>
-                </button>
-                <button class="preview-action-btn btn-download" onclick="downloadCV()">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-                    <span>Download PDF</span>
-                </button>
+                <div class="preview-avatar" id="preview-topbar-avatar" title="Profile">U</div>
             </div>
         </div>
 
-        <!-- Body: main CV + right sidebar -->
+        <!-- Body: 3 columns -->
         <div class="preview-body">
+
+            <!-- Left sidebar: Sections list -->
+            <aside class="preview-left-sidebar">
+                <div class="preview-profile-card">
+                    <div class="preview-profile-label">Profile</div>
+                    <div class="preview-profile-avatar" id="preview-left-avatar">U</div>
+                    <div class="preview-profile-name" id="preview-left-name">Your Name</div>
+                    <div class="preview-profile-title" id="preview-left-title">Your Title</div>
+                </div>
+                <div class="preview-sections-label">Sections</div>
+                <div class="preview-section-item" onclick="goToSectionFromPreview(1)">
+                    <span class="preview-section-check" id="sec-check-personal">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <span class="preview-section-name">Personal Details</span>
+                    <button class="preview-section-edit" onclick="event.stopPropagation(); goToSectionFromPreview(1)" title="Edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </button>
+                </div>
+                <div class="preview-section-item" onclick="goToSectionFromPreview(2)">
+                    <span class="preview-section-check" id="sec-check-summary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <span class="preview-section-name">Summary</span>
+                    <button class="preview-section-edit" onclick="event.stopPropagation(); goToSectionFromPreview(2)" title="Edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </button>
+                </div>
+                <div class="preview-section-item" onclick="goToSectionFromPreview(3)">
+                    <span class="preview-section-check" id="sec-check-experience">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <span class="preview-section-name">Experience</span>
+                    <button class="preview-section-edit" onclick="event.stopPropagation(); goToSectionFromPreview(3)" title="Edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </button>
+                </div>
+                <div class="preview-section-item" onclick="goToSectionFromPreview(4)">
+                    <span class="preview-section-check" id="sec-check-education">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <span class="preview-section-name">Education</span>
+                    <button class="preview-section-edit" onclick="event.stopPropagation(); goToSectionFromPreview(4)" title="Edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </button>
+                </div>
+                <div class="preview-section-item" onclick="goToSectionFromPreview(5)">
+                    <span class="preview-section-check" id="sec-check-other">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </span>
+                    <span class="preview-section-name">Other Sections</span>
+                    <button class="preview-section-edit" onclick="event.stopPropagation(); goToSectionFromPreview(5)" title="Edit">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                    </button>
+                </div>
+                <button class="preview-add-section-btn" onclick="goToSectionFromPreview(5)">
+                    <span style="font-size:16px; line-height:1;">+</span> Add new section
+                </button>
+            </aside>
 
             <!-- Main scrollable CV area -->
             <div class="preview-main-area">
@@ -1684,22 +2158,36 @@
                     <div class="preview-cv-page" id="preview-cv-page">
                         <!-- CV content cloned here by JS -->
                     </div>
+
+                    <!-- Action bar: Print / Download / Save -->
+                    <div class="preview-action-bar">
+                        <button class="preview-action-btn btn-soft" id="preview-print-btn" onclick="printCV(event)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                            <span>Print</span>
+                        </button>
+                        <button class="preview-action-btn btn-soft" id="preview-download-btn" onclick="downloadCV(event)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                            <span>Download</span>
+                        </button>
+                        <button class="preview-action-btn btn-save" id="preview-save-btn" onclick="saveCV(event)">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                            <span>Save</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- Right sidebar with thumbnail -->
-            <div class="preview-sidebar">
-                <div class="preview-sidebar-label">Pages</div>
-                <div class="preview-thumb" id="preview-thumb" onclick="scrollToTop()">
-                    <div style="padding: 8px; font-size: 6px; color: #64748b; line-height: 1.4;" id="preview-thumb-content">
-                        <!-- mini thumbnail content -->
-                    </div>
-                    <div class="preview-thumb-badge">1</div>
-                </div>
-                <button class="preview-change-template-btn" onclick="goToTemplates()">
-                    <span style="font-size: 16px;">⊞</span> Change Template
+            <!-- Right sidebar: templates browser -->
+            <aside class="preview-sidebar">
+                <button class="preview-browse-templates-btn" onclick="goToTemplates()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+                    Browse other Templates
                 </button>
-            </div>
+                <div class="preview-sidebar-label">Templates</div>
+                <div class="preview-templates-grid" id="preview-templates-grid">
+                    <!-- Built dynamically by JS -->
+                </div>
+            </aside>
 
         </div>
     </div>
@@ -2458,14 +2946,126 @@
             pageEl.innerHTML = '';
             pageEl.appendChild(clone);
 
-            // Build mini thumbnail
-            buildThumbnail();
+            // Populate left-sidebar profile info from the latest values
+            updatePreviewSidebarProfile();
+            // Update completion checks for sections
+            updatePreviewSectionChecks();
+            // Build right-sidebar templates grid
+            buildPreviewTemplatesGrid();
 
             // Show preview view
             hideAllViews();
             document.getElementById('view-preview').classList.add('active');
             document.getElementById('home-nav').style.display = 'none';
             document.getElementById('builder-nav').style.display = 'none';
+        }
+
+        function updatePreviewSidebarProfile() {
+            const fName = (document.getElementById('fName') && document.getElementById('fName').value) || '';
+            const titleField = document.getElementById('title') || document.getElementById('jobTitle');
+            const titleVal = (titleField && titleField.value) || '';
+            const previewName = document.getElementById('preview-name');
+            const previewTitle = document.getElementById('preview-title');
+
+            const displayName = fName || (previewName && previewName.innerText) || 'Your Name';
+            const displayTitle = titleVal || (previewTitle && previewTitle.innerText) || 'Your Title';
+
+            const initials = displayName.trim().split(/\s+/).map(n => n[0] || '').join('').slice(0, 2).toUpperCase() || 'U';
+
+            const leftAvatar = document.getElementById('preview-left-avatar');
+            const leftName = document.getElementById('preview-left-name');
+            const leftTitle = document.getElementById('preview-left-title');
+            const topAvatar = document.getElementById('preview-topbar-avatar');
+            if (leftAvatar) leftAvatar.textContent = initials;
+            if (leftName) leftName.textContent = displayName;
+            if (leftTitle) leftTitle.textContent = displayTitle;
+            if (topAvatar) topAvatar.textContent = initials;
+        }
+
+        function updatePreviewSectionChecks() {
+            const setCheck = (id, isComplete) => {
+                const el = document.getElementById(id);
+                if (!el) return;
+                if (isComplete) el.classList.remove('empty');
+                else el.classList.add('empty');
+            };
+            const fName = (document.getElementById('fName') && document.getElementById('fName').value) || '';
+            const email = (document.getElementById('email') && document.getElementById('email').value) || '';
+            const summary = (document.getElementById('summary') && document.getElementById('summary').value) || '';
+            setCheck('sec-check-personal', !!(fName && email));
+            setCheck('sec-check-summary', !!summary);
+            setCheck('sec-check-experience', typeof jobs !== 'undefined' && jobs.length > 0);
+            setCheck('sec-check-education', typeof education !== 'undefined' && education.length > 0);
+            const hasOther = (typeof certifications !== 'undefined' && certifications.length > 0)
+                || (typeof accomplishments !== 'undefined' && accomplishments.length > 0)
+                || (typeof languages !== 'undefined' && languages.length > 0)
+                || (typeof hobbies !== 'undefined' && hobbies.length > 0);
+            setCheck('sec-check-other', hasOther);
+        }
+
+        /* Navigate from preview's left-sidebar back to a specific builder step */
+        function goToSectionFromPreview(stepNumber) {
+            previewReturnStep = stepNumber;
+            hideAllViews();
+            document.getElementById('view-builder').classList.add('active');
+            document.getElementById('home-nav').style.display = 'none';
+            document.getElementById('builder-nav').style.display = 'flex';
+            goToStep(stepNumber);
+        }
+
+        /* Build the 9-template grid in the right sidebar */
+        function buildPreviewTemplatesGrid() {
+            const grid = document.getElementById('preview-templates-grid');
+            if (!grid) return;
+            const liveCV = document.getElementById('live-cv-preview');
+            const currentTheme = liveCV ? Array.from(liveCV.classList).find(c => c.startsWith('theme-')) : 'theme-free';
+            const templates = [
+                { theme: 'theme-free',     name: 'Free',     title: 'Classic CV' },
+                { theme: 'theme-bloom',    name: 'Bloom',    title: 'Modern CV' },
+                { theme: 'theme-tech',     name: 'Tech',     title: 'Engineer CV' },
+                { theme: 'theme-creative', name: 'Creative', title: 'Designer CV' },
+                { theme: 'theme-business', name: 'Business', title: 'Executive CV' },
+                { theme: 'theme-elite',    name: 'Elite',    title: 'Premium CV' },
+                { theme: 'theme-impact',   name: 'Impact',   title: 'Bold CV' },
+                { theme: 'theme-artistic', name: 'Artistic', title: 'Creative CV' },
+                { theme: 'theme-expert',   name: 'Expert',   title: 'Senior CV' }
+            ];
+            const userName = ((document.getElementById('fName') && document.getElementById('fName').value) || 'Your Name').toUpperCase();
+            const userTitle = (document.getElementById('title') && document.getElementById('title').value) || 'Job Title';
+            grid.innerHTML = templates.map(t => `
+                <div class="preview-template-card ${t.theme === currentTheme ? 'selected' : ''}" data-theme="${t.theme}" onclick="selectPreviewTemplate('${t.theme}')" title="${t.name}">
+                    <div class="preview-template-card-bg">
+                        <div class="preview-template-card-name">${_escapeHtml(userName)}</div>
+                        <div class="preview-template-card-title">${_escapeHtml(userTitle)}</div>
+                        <div class="preview-template-card-line dark"></div>
+                        <div class="preview-template-card-line"></div>
+                        <div class="preview-template-card-line short"></div>
+                        <div class="preview-template-card-line"></div>
+                        <div class="preview-template-card-line short"></div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectPreviewTemplate(themeClass) {
+            // Apply theme to the live CV
+            const liveCV = document.getElementById('live-cv-preview');
+            if (liveCV) {
+                liveCV.className = 'cv-document ' + themeClass;
+            }
+            // Re-clone into the preview area so user sees the change immediately
+            const pageEl = document.getElementById('preview-cv-page');
+            if (liveCV && pageEl) {
+                const clone = liveCV.cloneNode(true);
+                clone.id = 'preview-cv-clone';
+                clone.style.cssText = 'width:100%; border-radius:4px; overflow:hidden; box-shadow:none; min-height:800px;';
+                pageEl.innerHTML = '';
+                pageEl.appendChild(clone);
+            }
+            // Update selected state on cards
+            document.querySelectorAll('.preview-template-card').forEach(card => {
+                card.classList.toggle('selected', card.getAttribute('data-theme') === themeClass);
+            });
         }
 
         function getCurrentStep() {
@@ -2491,8 +3091,11 @@
         }
 
         function buildThumbnail() {
+            // Legacy single-page thumbnail (kept for backward compatibility).
+            // The new preview design uses the right-side templates grid instead.
             const liveCV = document.getElementById('live-cv-preview');
             const thumbContent = document.getElementById('preview-thumb-content');
+            if (!liveCV || !thumbContent) return;
             // Replicate a tiny scaled version via CSS transform
             const clone = liveCV.cloneNode(true);
             clone.id = '';
@@ -2506,85 +3109,237 @@
         }
 
         function scrollToTop() {
-            document.querySelector('.preview-main-area').scrollTo({ top: 0, behavior: 'smooth' });
+            const el = document.querySelector('.preview-main-area');
+            if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function downloadCV() {
-            const btn = event ? event.target.closest('button') : null;
+        function downloadCV(evt) {
+            const btn = (evt && evt.target ? evt.target.closest('button') : null) || document.getElementById('preview-download-btn');
+            const originalHTML = btn ? btn.innerHTML : null;
             if (btn) {
-                const originalHTML = btn.innerHTML;
-                btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><line x1="12" y1="2" x2="12" y2="15"/><polyline points="5 15 12 22 19 15"/></svg> <span class="loading" style="width:16px;height:16px;border-width:2px;"></span>';
+                btn.innerHTML = '<span class="loading" style="width:16px;height:16px;border-width:2px;display:inline-block;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:spin 0.7s linear infinite;"></span> Preparing...';
                 btn.disabled = true;
-                setTimeout(() => {
-                    btn.innerHTML = originalHTML;
-                    btn.disabled = false;
-                    _triggerPrintAsPDF();
-                }, 800);
-            } else {
-                _triggerPrintAsPDF();
+            }
+            // Use a small delay so the spinner is visible
+            setTimeout(() => {
+                _printCvViaIframe('download');
+                if (btn) {
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.disabled = false;
+                    }, 1200);
+                }
+            }, 250);
+        }
+
+        function printCV(evt) {
+            const btn = (evt && evt.target ? evt.target.closest('button') : null) || document.getElementById('preview-print-btn');
+            const originalHTML = btn ? btn.innerHTML : null;
+            if (btn) {
+                btn.innerHTML = '<span class="loading" style="width:16px;height:16px;border-width:2px;display:inline-block;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:spin 0.7s linear infinite;"></span> Preparing...';
+                btn.disabled = true;
+            }
+            setTimeout(() => {
+                _printCvViaIframe('print');
+                if (btn) {
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.disabled = false;
+                    }, 1200);
+                }
+            }, 250);
+        }
+
+        /*
+         * Robust print/download using a hidden iframe.
+         * - No pop-up blockers (iframe is in same window)
+         * - All <style> tags from the parent are copied (incl. CSS variables)
+         * - Computed CSS-variable values are inlined onto :root for safety
+         * - Triggers browser print dialog (which lets user "Save as PDF")
+         */
+        function _printCvViaIframe(mode) {
+            try {
+                const cvEl = document.getElementById('preview-cv-clone') || document.getElementById('live-cv-preview');
+                if (!cvEl) {
+                    // Last-resort fallback: print whole window
+                    window.print();
+                    return;
+                }
+
+                // Build a deep clone (so we never disturb the visible DOM)
+                const clone = cvEl.cloneNode(true);
+                clone.id = 'live-cv-preview';
+                clone.style.boxShadow = 'none';
+                clone.style.borderRadius = '0';
+                clone.style.margin = '0 auto';
+
+                // Collect ALL <style> nodes from the document (so theme + base styles travel)
+                let stylesHTML = '';
+                document.querySelectorAll('style').forEach(s => {
+                    stylesHTML += s.outerHTML;
+                });
+                document.querySelectorAll('link[rel="stylesheet"]').forEach(l => {
+                    stylesHTML += l.outerHTML;
+                });
+
+                // Read computed CSS variables off :root and re-emit them so they ALWAYS resolve
+                const rootCS = getComputedStyle(document.documentElement);
+                const varNames = [
+                    '--primary-color', '--primary-hover', '--secondary-blue',
+                    '--text-color', '--bg-light', '--border-color', '--accent-color'
+                ];
+                let rootVars = ':root{';
+                varNames.forEach(v => {
+                    const val = rootCS.getPropertyValue(v).trim();
+                    if (val) rootVars += `${v}:${val};`;
+                });
+                rootVars += '}';
+
+                // Determine title for the printed document = user name (becomes default PDF filename)
+                let userName = '';
+                const nameEl = document.getElementById('fName');
+                if (nameEl && nameEl.value) userName = nameEl.value;
+                if (!userName) {
+                    const previewName = document.getElementById('preview-name');
+                    if (previewName && previewName.innerText) userName = previewName.innerText;
+                }
+                if (!userName) userName = 'My CV';
+                const docTitle = mode === 'download' ? (userName + ' - CV') : ('Print – ' + userName);
+
+                // Remove any previous print iframe
+                const oldIframe = document.getElementById('cv-print-iframe');
+                if (oldIframe) oldIframe.remove();
+
+                // Hidden iframe
+                const iframe = document.createElement('iframe');
+                iframe.id = 'cv-print-iframe';
+                iframe.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;visibility:hidden;';
+                document.body.appendChild(iframe);
+
+                const doc = iframe.contentDocument || iframe.contentWindow.document;
+                doc.open();
+                doc.write(`<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${_escapeHtml(docTitle)}</title>
+<style>${rootVars}</style>
+${stylesHTML}
+<style>
+  *, *::before, *::after { box-sizing: border-box; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+  html, body { margin: 0; padding: 0; background: white; font-family: 'Inter', sans-serif; }
+  body { padding: 0; }
+  .cv-document { width: 100% !important; max-width: 800px !important; min-height: auto !important; box-shadow: none !important; border-radius: 0 !important; margin: 0 auto !important; }
+  @page { size: A4; margin: 12mm; }
+  @media print {
+    html, body { margin: 0; padding: 0; }
+    .cv-document { box-shadow: none !important; }
+  }
+</style>
+</head>
+<body>
+${clone.outerHTML}
+</body>
+</html>`);
+                doc.close();
+
+                // Wait for iframe content (and its stylesheets) to finish loading
+                const triggerPrint = () => {
+                    try {
+                        iframe.contentWindow.focus();
+                        iframe.contentWindow.print();
+                    } catch (e) {
+                        console.error('Print failed:', e);
+                        // Fallback: open in new tab
+                        _printFallbackWindow(clone.outerHTML, stylesHTML + '<style>' + rootVars + '</style>', docTitle);
+                    }
+                    // Clean up after print dialog closes (give browser time)
+                    setTimeout(() => { if (iframe && iframe.parentNode) iframe.remove(); }, 1500);
+                };
+
+                if (iframe.contentWindow.document.readyState === 'complete') {
+                    setTimeout(triggerPrint, 300);
+                } else {
+                    iframe.onload = () => setTimeout(triggerPrint, 300);
+                    // Safety net
+                    setTimeout(triggerPrint, 1500);
+                }
+            } catch (err) {
+                console.error('Print error:', err);
+                // Ultimate fallback
+                window.print();
             }
         }
 
-        function _triggerPrintAsPDF() {
-            // Use browser print-to-PDF as the most reliable approach
-            const cvEl = document.getElementById('preview-cv-clone') || document.getElementById('live-cv-preview');
-            if (!cvEl) { window.print(); return; }
-            const printWindow = window.open('', '_blank', 'width=800,height=900');
-            if (!printWindow) { window.print(); return; }
-            // Collect all styles
-            let styles = '';
-            document.querySelectorAll('style').forEach(s => { styles += s.outerHTML; });
-            document.querySelectorAll('link[rel="stylesheet"]').forEach(l => { styles += l.outerHTML; });
-            const cvHTML = cvEl.outerHTML.replace(/id="preview-cv-clone"/, 'id="live-cv-preview"');
-            printWindow.document.write(`<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>My CV</title>
-${styles}
-<style>
-  * { box-sizing: border-box; }
-  body { margin: 0; padding: 0; background: white; }
-  .cv-document { width: 100%; max-width: 800px; min-height: auto; box-shadow: none; border-radius: 0; margin: 0 auto; }
-  @page { size: A4; margin: 0; }
-  @media print { body { margin: 0; } }
-</style>
-</head>
-<body>
-${cvHTML}
-<script>window.onload=function(){ window.print(); setTimeout(function(){ window.close(); }, 500); };<\/script>
-</body>
-</html>`);
-            printWindow.document.close();
+        function _printFallbackWindow(cvHTML, stylesHTML, title) {
+            const w = window.open('', '_blank', 'width=900,height=1000');
+            if (!w) {
+                alert('Pop-ups are blocked. Please allow pop-ups for this site to print/download.');
+                return;
+            }
+            w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>${_escapeHtml(title)}</title>${stylesHTML}<style>body{margin:0;padding:0;background:white;}.cv-document{width:100%;max-width:800px;box-shadow:none;border-radius:0;margin:0 auto;}@page{size:A4;margin:12mm;}</style></head><body>${cvHTML}<script>window.onload=function(){setTimeout(function(){window.print();},400);};<\/script></body></html>`);
+            w.document.close();
         }
 
-        function printCV() {
-            const cvEl = document.getElementById('preview-cv-clone') || document.getElementById('live-cv-preview');
-            if (!cvEl) { window.print(); return; }
-            const printWindow = window.open('', '_blank', 'width=800,height=900');
-            if (!printWindow) { window.print(); return; }
-            let styles = '';
-            document.querySelectorAll('style').forEach(s => { styles += s.outerHTML; });
-            const cvHTML = cvEl.outerHTML.replace(/id="preview-cv-clone"/, 'id="live-cv-preview"');
-            printWindow.document.write(`<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Print CV</title>
-${styles}
-<style>
-  * { box-sizing: border-box; }
-  body { margin: 0; padding: 20px; background: white; }
-  .cv-document { width: 100%; max-width: 780px; min-height: auto; box-shadow: none; border-radius: 0; margin: 0 auto; }
-  @page { size: A4; margin: 15mm; }
-</style>
-</head>
-<body>
-${cvHTML}
-<script>window.onload=function(){ window.print(); setTimeout(function(){ window.close(); }, 500); };<\/script>
-</body>
-</html>`);
-            printWindow.document.close();
+        function _escapeHtml(str) {
+            return String(str || '').replace(/[&<>"']/g, ch => ({
+                '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+            }[ch]));
+        }
+
+        /* Save current CV (in this prototype it's a friendly toast). */
+        function saveCV(evt) {
+            const btn = (evt && evt.target ? evt.target.closest('button') : null) || document.getElementById('preview-save-btn');
+            const originalHTML = btn ? btn.innerHTML : null;
+            if (btn) {
+                btn.innerHTML = '<span class="loading" style="width:16px;height:16px;border-width:2px;display:inline-block;border-radius:50%;border:2px solid currentColor;border-top-color:transparent;animation:spin 0.7s linear infinite;"></span> Saving...';
+                btn.disabled = true;
+            }
+
+            // Persist a snapshot to localStorage as a real save action
+            try {
+                const cvData = {
+                    name: (document.getElementById('fName') && document.getElementById('fName').value) || '',
+                    email: (document.getElementById('email') && document.getElementById('email').value) || '',
+                    phone: (document.getElementById('phone') && document.getElementById('phone').value) || '',
+                    location: (document.getElementById('location') && document.getElementById('location').value) || '',
+                    jobs: typeof jobs !== 'undefined' ? jobs : [],
+                    education: typeof education !== 'undefined' ? education : [],
+                    skills: typeof skills !== 'undefined' ? skills : [],
+                    savedAt: new Date().toISOString()
+                };
+                localStorage.setItem('huntbl_saved_cv', JSON.stringify(cvData));
+            } catch (e) { /* localStorage may be unavailable, ignore */ }
+
+            setTimeout(() => {
+                if (btn) {
+                    btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg> Saved';
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.disabled = false;
+                    }, 1500);
+                }
+                showSavedToast();
+            }, 700);
+        }
+
+        function showSavedToast() {
+            let toast = document.getElementById('cv-saved-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'cv-saved-toast';
+                toast.style.cssText = 'position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(40px);background:#22c55e;color:white;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:600;box-shadow:0 8px 24px rgba(34,197,94,0.35);z-index:300;display:flex;align-items:center;gap:8px;opacity:0;transition:all 0.3s;';
+                toast.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18"><polyline points="20 6 9 17 4 12"/></svg> CV saved successfully';
+                document.body.appendChild(toast);
+            }
+            requestAnimationFrame(() => {
+                toast.style.opacity = '1';
+                toast.style.transform = 'translateX(-50%) translateY(0)';
+            });
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateX(-50%) translateY(40px)';
+            }, 2400);
         }
 
         /* --- EMAIL --- */
