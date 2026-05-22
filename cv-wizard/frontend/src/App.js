@@ -18,24 +18,7 @@ import SuccessPage from './pages/SuccessPage';
 import Dashboard from './pages/Dashboard';
 import './styles/global.css';
 
-const STEPS = [
-  'homepage',       // 0
-  'select-template', // 1
-  'personal-info',   // 2
-  'experience',      // 3
-  'exp-overview',    // 4
-  'education',       // 5
-  'edu-overview',    // 6
-  'skills',          // 7
-  'summary',         // 8
-  'other-sections',  // 9
-  'preview',         // 10
-  'signup',          // 11
-  'login',           // 12
-  'payment',         // 13
-  'success',         // 14
-  'dashboard'        // 15
-];
+
 
 function AppContent() {
   const { currentStep } = useCVContext();
