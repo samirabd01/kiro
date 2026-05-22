@@ -2,6 +2,7 @@
   "name": "cv-wizard-frontend",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://samirabd01.github.io/kiro",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
@@ -19,7 +20,12 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
+  "devDependencies": {
+    "gh-pages": "^6.0.0"
   },
   "eslintConfig": {
     "extends": [
