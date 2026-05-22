@@ -4,7 +4,7 @@ import { useCVContext } from '../context/CVContext';
 import './Experience.css';
 
 const Experience = () => {
-  const { addExperience, nextStep, prevStep, goToStep } = useCVContext();
+  const { addExperience, prevStep, goToStep } = useCVContext();
   const [form, setForm] = useState({
     jobTitle: '',
     company: '',
