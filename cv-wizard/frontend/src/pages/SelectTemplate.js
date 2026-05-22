@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import WizardLayout from '../components/WizardLayout';
 import { useCVContext } from '../context/CVContext';
 import './SelectTemplate.css';
 
@@ -103,10 +102,12 @@ const SelectTemplate = () => {
   };
 
   return (
-    <WizardLayout
-      title="Choose Your Template"
-      subtitle="Select a template that best represents your professional style"
-    >
+    <div className="select-template-page">
+      <div className="select-template-header">
+        <h1 className="select-template-title">Select CV</h1>
+        <p className="select-template-subtitle">Choose a template that best represents your professional style</p>
+      </div>
+
       <div className="template-grid">
         {TEMPLATES.map((template) => (
           <div
@@ -114,12 +115,20 @@ const SelectTemplate = () => {
             className={`template-card ${selected === template.id ? 'selected' : ''}`}
             onClick={() => handleSelect(template.id)}
           >
-            {/* Template Preview */}
-            <div className="template-preview" style={{
-              background: `linear-gradient(135deg, ${template.colors[0]}22, ${template.colors[1]}11)`
-            }}>
-              <div className="template-preview-inner">
-                {/* Mini CV preview */}
+            {/* Template Preview with actual image */}
+            <div className="template-preview">
+              <img
+                src={template.image}
+                alt={`${template.name} template`}
+                className="template-image"
+                onError={(e) => {
+                  // Fallback to mini-cv if image fails
+                  e.target.style.display = 'none';
+                  e.target.nextSibling.style.display = 'flex';
+                }}
+              />
+              {/* Fallback mini-CV (hidden by default) */}
+              <div className="template-preview-fallback" style={{ display: 'none' }}>
                 <div className="mini-cv">
                   <div className="mini-header" style={{ background: template.colors[0] }}>
                     <div className="mini-avatar"></div>
@@ -165,7 +174,7 @@ const SelectTemplate = () => {
       </div>
 
       {/* Navigation */}
-      <div className="wizard-nav">
+      <div className="select-template-nav">
         <button className="btn-secondary" onClick={prevStep}>
           ← Back
         </button>
@@ -178,7 +187,7 @@ const SelectTemplate = () => {
           Next: Personal Info →
         </button>
       </div>
-    </WizardLayout>
+    </div>
   );
 };
 

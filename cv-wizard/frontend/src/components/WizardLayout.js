@@ -1,5 +1,6 @@
 import React from 'react';
 import { useCVContext } from '../context/CVContext';
+import CVPreview from './CVPreview';
 import './WizardLayout.css';
 
 const STEPS = [
@@ -12,8 +13,8 @@ const STEPS = [
   { id: 7, label: 'Other', icon: '📋' },
 ];
 
-const WizardLayout = ({ children, title, subtitle, currentWizardStep, totalSteps }) => {
-  const { goToStep, currentStep } = useCVContext();
+const WizardLayout = ({ children, title, subtitle, showPreview = true }) => {
+  const { goToStep, currentStep, cvData } = useCVContext();
 
   // Map main step to wizard step index (1-7)
   const wizardStepMap = {
@@ -82,20 +83,35 @@ const WizardLayout = ({ children, title, subtitle, currentWizardStep, totalSteps
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="wizard-main">
-        <div className="wizard-header">
-          {title && (
-            <div className="wizard-title-block">
-              <h1 className="wizard-title">{title}</h1>
-              {subtitle && <p className="wizard-subtitle">{subtitle}</p>}
-            </div>
-          )}
+      {/* Main Content — two-column: form + CV preview */}
+      <div className="wizard-body">
+        {/* Form Column */}
+        <div className="wizard-form-col">
+          <div className="wizard-header">
+            {title && (
+              <div className="wizard-title-block">
+                <h1 className="wizard-title">{title}</h1>
+                {subtitle && <p className="wizard-subtitle">{subtitle}</p>}
+              </div>
+            )}
+          </div>
+          <div className="wizard-content">
+            {children}
+          </div>
         </div>
 
-        <div className="wizard-content">
-          {children}
-        </div>
+        {/* CV Preview Column */}
+        {showPreview && (
+          <div className="wizard-preview-col">
+            <div className="wizard-preview-header">
+              <h3 className="preview-label">Live Preview</h3>
+              <span className="preview-badge">Auto-updated</span>
+            </div>
+            <div className="wizard-preview-wrap">
+              <CVPreview cvData={cvData} />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

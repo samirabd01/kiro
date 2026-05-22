@@ -1,5 +1,41 @@
-/* Select Template */
+/* Select Template Page */
 
+.select-template-page {
+  min-height: 100vh;
+  background: #0f172a;
+  padding: 48px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-template-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.select-template-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #f1f5f9;
+  letter-spacing: -0.5px;
+  margin-bottom: 10px;
+}
+
+.select-template-subtitle {
+  font-size: 16px;
+  color: #64748b;
+}
+
+.select-template-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 32px;
+  margin-top: auto;
+  border-top: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+/* Template Grid */
 .template-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -30,22 +66,29 @@
 /* Preview */
 .template-preview {
   position: relative;
-  height: 160px;
+  height: 200px;
+  overflow: hidden;
+  background: #1a2234;
+}
+
+.template-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top;
+  display: block;
+}
+
+.template-preview-fallback {
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
 }
 
-.template-preview-inner {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Mini CV */
+/* Mini CV Fallback */
 .mini-cv {
   width: 110px;
   height: 130px;
@@ -180,6 +223,10 @@
 @media (max-width: 900px) {
   .template-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .select-template-page {
+    padding: 32px 20px;
   }
 }
 
